@@ -82,14 +82,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Kamera.cpp" />
+    <ClCompile Include="Maailma.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="MediaLoader.cpp" />
     <ClCompile Include="Pelihahmo.cpp" />
     <ClCompile Include="Pelimoottori.cpp" />
     <ClCompile Include="Tekstuurit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Kamera.h" />
+    <ClInclude Include="Maailma.h" />
     <ClInclude Include="Main.h" />
+    <ClInclude Include="MediaLoader.h" />
     <ClInclude Include="Pelihahmo.h" />
     <ClInclude Include="Pelimoottori.h" />
     <ClInclude Include="Tekstuurit.h" />

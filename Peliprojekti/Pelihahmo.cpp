@@ -38,13 +38,13 @@ int Pelihahmo::getHeight(){
 void Pelihahmo::render(int camX, int camY )
 {
     //Näytä neliö kameran suhteen
-	nelio.render( (int)(x - camX), (int)(y - camY) );
+	pelihahmoText.render( (int)(x - camX), (int)(y - camY) );
 
 }
 
 //Tälle jotain fiksumpaa ratkaisua?
 void Pelihahmo::setTekstuuri(Tekstuurit tekstuuri){
-	nelio = tekstuuri;
+	pelihahmoText = tekstuuri;
 }
 
 void Pelihahmo::setXVelocity(float vx, int direction){

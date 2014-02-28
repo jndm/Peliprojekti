@@ -1,5 +1,7 @@
+#pragma once
 #ifndef PELIMOOTTORI_H
 #define PELIMOOTTORI_H
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <stdio.h>
@@ -8,10 +10,15 @@
 #include "Pelihahmo.h"
 #include "Tekstuurit.h"
 #include "Kamera.h"
+#include "Maailma.h"
+#include "MediaLoader.h"
+
+class Maailma;
+class MediaLoader;
 
 class Pelimoottori {
 private:
-	//Ruuduun koko
+	//Ruudun koko
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
 	int LEVEL_WIDTH;
@@ -23,9 +30,6 @@ private:
 
 	//Main loop
 	void mainLoop();
-
-	//lataa kuvia (Ei käytössä atm)
-	bool loadMedia();
 
 	//Kutsutaan suljettaessa ja vapautetaan muisti
 	void close();
@@ -54,12 +58,16 @@ private:
 	Pelihahmo* pelihahmo;
 	bool quit;
 	Tekstuurit nelio, tausta;
-	Kamera camera;
+	Maailma* maailma;
+	MediaLoader* mediaLoader;
 
 public:
 	Pelimoottori(void);
 	~Pelimoottori(void);
 	int start();
+	int getSCREENWIDTH(){return SCREEN_WIDTH;}
+	int getSCREENHEIGHT(){return SCREEN_HEIGHT;}
+	int getLEVELWIDTH(){return LEVEL_WIDTH;}
+	int getLEVELHEIGHT(){return LEVEL_HEIGHT;}
 };
-
 #endif

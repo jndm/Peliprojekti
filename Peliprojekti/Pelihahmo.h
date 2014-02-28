@@ -20,7 +20,7 @@ public:
 	void setYVelocity(float vy, int direction);
 
 	void render( int camX, int camY );
-	Tekstuurit nelio;
+	Tekstuurit pelihahmoText;
 	void setTekstuuri(Tekstuurit tekstuuri);
 };
 
