@@ -1,0 +1,57 @@
+#include "Pelihahmo.h"
+
+Pelihahmo::Pelihahmo(void){
+	x=100;
+	y=100;
+	dx = 0;
+	dy = 0;
+	width = 50;
+	height = 50;
+}
+
+Pelihahmo::~Pelihahmo(void){
+
+}
+void Pelihahmo::move(float fts){
+	x+=dx*fts;
+	y+=dy*fts;
+
+	printf("%f %f %f y: %f\n",dy, fts, dy*fts, y);
+}
+
+float Pelihahmo::getX(){
+	return x;
+}
+
+float Pelihahmo::getY(){
+	return y;
+}
+
+int Pelihahmo::getWidth(){
+	return width;
+}
+
+int Pelihahmo::getHeight(){
+	return height;
+}
+
+void Pelihahmo::render(int camX, int camY )
+{
+    //Näytä neliö kameran suhteen
+	nelio.render( (int)(x - camX), (int)(y - camY) );
+
+}
+
+//Tälle jotain fiksumpaa ratkaisua?
+void Pelihahmo::setTekstuuri(Tekstuurit tekstuuri){
+	nelio = tekstuuri;
+}
+
+void Pelihahmo::setXVelocity(float vx, int direction){
+	dx = vx*direction;
+}
+
+void Pelihahmo::setYVelocity(float vy, int direction){
+	dy = vy*direction;
+	
+}
