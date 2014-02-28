@@ -156,14 +156,10 @@ void Pelimoottori::mainLoop(){
 			{
 				handleEvent();
 			}
-			printf( "Failed");
 			maailma->render();
-			printf( "rend");
 			maailma->move(FRAMETIMESTEP);
 			//Päivitä ruutu
-			printf( "Failed");
 			SDL_RenderPresent( gRenderer );
-			printf( "Failed");
 		}
 }
 
