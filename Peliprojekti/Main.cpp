@@ -1,9 +1,7 @@
 #include "Main.h"
-#include "Pelimoottori.h"
 int main( int argc, char* args[] )
 {
-	Pelimoottori* pelimoottori = new Pelimoottori();
-	pelimoottori->start();
-	delete pelimoottori;
+	Pelimoottori pelimoottori;
+	pelimoottori.start();
 	return 0;
 }

@@ -7,8 +7,8 @@ Pelimoottori::Pelimoottori(void){
 	LEVEL_WIDTH = 2048;
 	LEVEL_HEIGHT = 2048;
 	FRAMETIMESTEP = 1.f/60.f;
-	pelihahmo = new Pelihahmo();
-
+	maailma = new Maailma(this);
+	mediaLoader = new MediaLoader(maailma);
 }
 
 Pelimoottori::~Pelimoottori(void){
@@ -65,35 +65,6 @@ bool Pelimoottori::init()
 			}
 		}
 	}
-
-	//Alustetaan kamera
-	camera.alusta(SCREEN_WIDTH, SCREEN_HEIGHT, pelihahmo);
-
-	return success;
-}
-
-bool Pelimoottori::loadMedia()
-{
-	//Loading success flag
-	bool success = true;
-
-	//Load dot texture
-	if( !nelio.loadFromFile( "Images/Characters/Pelihahmo.png", gRenderer ) )
-	{
-		printf( "Failed to load player texture!\n" );
-		success = false;
-	}
-	else {
-		pelihahmo->setTekstuuri(nelio);
-	}
-
-	//Load background texture
-	if( !tausta.loadFromFile( "Images/Background/Meri.png", gRenderer ) )
-	{
-		printf( "Failed to load background texture!\n" );
-		success = false;
-	}
-
 	return success;
 }
 
@@ -104,7 +75,8 @@ void Pelimoottori::close()
 	SDL_DestroyWindow( gWindow );
 	gWindow = NULL;
 	gRenderer = NULL;
-	delete pelihahmo;
+	delete mediaLoader;
+	delete maailma;
 
 	//Quit SDL subsystems
 	IMG_Quit();
@@ -119,16 +91,16 @@ void Pelimoottori::handleEvent(){
 		//Mitä painettiin?
 		switch( e.key.keysym.sym ){
 			case SDLK_UP:
-				pelihahmo->setYVelocity(200,-1);
+				maailma->getPelihahmo()->setYVelocity(200,-1);
 			break;
 			case SDLK_DOWN:
-				pelihahmo->setYVelocity(200, 1);
+				maailma->getPelihahmo()->setYVelocity(200, 1);
 			break;
 			case SDLK_LEFT:
-				pelihahmo->setXVelocity(200,-1);
+				maailma->getPelihahmo()->setXVelocity(200,-1);
 			break;
 			case SDLK_RIGHT:
-				pelihahmo->setXVelocity(200, 1);			
+				maailma->getPelihahmo()->setXVelocity(200, 1);			
 			break;
 		}
 	}
@@ -136,16 +108,16 @@ void Pelimoottori::handleEvent(){
     {
         switch( e.key.keysym.sym ){
 			case SDLK_UP:
-				pelihahmo->setYVelocity(0,-1);
+				maailma->getPelihahmo()->setYVelocity(0,-1);
 			break;
 			case SDLK_DOWN:
-				pelihahmo->setYVelocity(0, 1);
+				maailma->getPelihahmo()->setYVelocity(0, 1);
 			break;
 			case SDLK_LEFT:
-				pelihahmo->setXVelocity(0,-1);
+				maailma->getPelihahmo()->setXVelocity(0,-1);
 			break;
 			case SDLK_RIGHT:
-				pelihahmo->setXVelocity(0, 1);					
+				maailma->getPelihahmo()->setXVelocity(0, 1);					
 			break;
 		}
 	}
@@ -161,7 +133,7 @@ int Pelimoottori::start()
 	else
 	{
 		//Load media
-		if( !loadMedia() )
+		if( !mediaLoader->loadMedia(gRenderer) )
 		{
 			printf( "Failed to load media!\n" );
 		}
@@ -184,19 +156,14 @@ void Pelimoottori::mainLoop(){
 			{
 				handleEvent();
 			}
-
-			//Siirrä kamera
-			camera.moveCamera(SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_WIDTH, LEVEL_HEIGHT);
-
-			//Renderöi tausta
-			tausta.render( 0, 0, &camera.getCamera() );
-
-			//Renderöi pelihahmo
-			pelihahmo->render( camera.getCameraX(), camera.getCameraY() );
-
-			pelihahmo->move(FRAMETIMESTEP);
+			printf( "Failed");
+			maailma->render();
+			printf( "rend");
+			maailma->move(FRAMETIMESTEP);
 			//Päivitä ruutu
+			printf( "Failed");
 			SDL_RenderPresent( gRenderer );
+			printf( "Failed");
 		}
 }
 
