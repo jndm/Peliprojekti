@@ -81,6 +81,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GUI.cpp" />
     <ClCompile Include="Kamera.cpp" />
     <ClCompile Include="Maailma.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -90,6 +91,7 @@
     <ClCompile Include="Tekstuurit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GUI.h" />
     <ClInclude Include="Kamera.h" />
     <ClInclude Include="Maailma.h" />
     <ClInclude Include="Main.h" />

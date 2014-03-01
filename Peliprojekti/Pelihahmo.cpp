@@ -16,7 +16,7 @@ void Pelihahmo::move(float fts){
 	x+=dx*fts;
 	y+=dy*fts;
 
-	printf("%f %f %f y: %f\n",dy, fts, dy*fts, y);
+	//printf("x: %f y: %f liikeX: %f liikeY: %f\n",x,y,dx,dy);
 }
 
 float Pelihahmo::getX(){

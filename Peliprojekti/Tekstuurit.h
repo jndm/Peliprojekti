@@ -14,6 +14,9 @@ public:
 	void free();
 	Tekstuurit(void);
 	~Tekstuurit(void);
+	int getTextureWidth(){ return textureWidth; }
+	int getTextureHeight(){ return textureHeight; }
+
 
 private:
 

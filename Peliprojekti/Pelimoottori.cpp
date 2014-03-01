@@ -1,14 +1,14 @@
 #include "Pelimoottori.h"
 
 Pelimoottori::Pelimoottori(void){
-
 	SCREEN_WIDTH = 640;
 	SCREEN_HEIGHT = 480;
 	LEVEL_WIDTH = 2048;
 	LEVEL_HEIGHT = 2048;
 	FRAMETIMESTEP = 1.f/60.f;
+	gui = new GUI();
 	maailma = new Maailma(this);
-	mediaLoader = new MediaLoader(maailma);
+	mediaLoader = new MediaLoader(maailma, gui);
 }
 
 Pelimoottori::~Pelimoottori(void){
@@ -77,7 +77,7 @@ void Pelimoottori::close()
 	gRenderer = NULL;
 	delete mediaLoader;
 	delete maailma;
-
+	delete gui;
 	//Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
@@ -86,6 +86,15 @@ void Pelimoottori::close()
 void Pelimoottori::handleEvent(){
 	if( e.type == SDL_QUIT ){
 		quit = true;
+	}
+	//Hiiren käsittely
+	else if( e.type == SDL_MOUSEBUTTONDOWN){
+		int x, y;
+        SDL_GetMouseState( &x, &y );
+		if(gui->checkIfHitSideBar(x, y)){
+			gui->moveSpeedBarButton(y);
+			maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
+		}
 	}
 	else if( e.type == SDL_KEYDOWN){
 		//Mitä painettiin?

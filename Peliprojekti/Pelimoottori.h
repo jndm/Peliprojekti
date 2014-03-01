@@ -12,6 +12,7 @@
 #include "Kamera.h"
 #include "Maailma.h"
 #include "MediaLoader.h"
+#include "GUI.h"
 
 class Maailma;
 class MediaLoader;
@@ -60,6 +61,7 @@ private:
 	Tekstuurit nelio, tausta;
 	Maailma* maailma;
 	MediaLoader* mediaLoader;
+	GUI* gui;
 
 public:
 	Pelimoottori(void);
@@ -69,5 +71,6 @@ public:
 	int getSCREENHEIGHT(){return SCREEN_HEIGHT;}
 	int getLEVELWIDTH(){return LEVEL_WIDTH;}
 	int getLEVELHEIGHT(){return LEVEL_HEIGHT;}
+	GUI* getGUI(){ return gui; }
 };
 #endif

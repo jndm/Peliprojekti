@@ -26,8 +26,8 @@ bool Tekstuurit::loadFromFile(std::string path, SDL_Renderer* gRenderer){
 	}
 	else
 	{
-		//Color key, jolla voidaan määrittää läpinäkyvä väri
-		SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0, 0xFF, 0xFF ) );
+		//Color key, jolla voidaan määrittää läpinäkyvä väri (atm r:255 g:0 b:255)
+		SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB( loadedSurface->format, 0xFF, 0, 0xFF ) );
 
 		//Luodaan tekstuuri kuvasta(surfacesta)
         newTexture = SDL_CreateTextureFromSurface( gRendererCopy, loadedSurface );

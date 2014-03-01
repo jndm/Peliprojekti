@@ -6,6 +6,8 @@
 #include "Pelimoottori.h"
 #include "Kamera.h"
 #include "Tekstuurit.h"
+#include "GUI.h"
+
 class Pelimoottori;
 
 class Maailma{
@@ -24,5 +26,6 @@ private:
 	Pelihahmo* pelihahmo;
 	Kamera camera;
 	Tekstuurit tausta;
+	GUI* gui;
 };
 #endif

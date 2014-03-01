@@ -1,7 +1,8 @@
 #include "MediaLoader.h"
 
-MediaLoader::MediaLoader(Maailma* m){
+MediaLoader::MediaLoader(Maailma* m, GUI* g){
 	maailma = m;
+	gui = g;
 }
 
 bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
@@ -27,6 +28,24 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 	}
 	else{
 		maailma->setTaustaTexture(taustaText);
+	}
+	//Lataa nopeudensäädinpohja
+	if( !ssbTeksture.loadFromFile( "Images/GUI/SpeedSetterTriagle.png", gRenderer ) )
+	{
+		printf( "Failed to load speedsetter texture!\n" );
+		success = false;
+	}
+	else{
+		gui->setSpeedSetterBarTeksture(ssbTeksture);
+	}
+	//Lataa nopeudensäätönappula
+	if( !ssButton.loadFromFile( "Images/GUI/SpeedSetterButton.png", gRenderer ) )
+	{
+		printf( "Failed to load speedsetterbutton texture!\n" );
+		success = false;
+	}
+	else{
+		gui->setSpeedSetterButtonTeksture(ssButton);
 	}
 	return success;
 }
