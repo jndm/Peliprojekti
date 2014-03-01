@@ -24,7 +24,7 @@ void GUI::setSpeedSetterButtonTeksture(Tekstuurit ssbut){
 }
 
 void GUI::moveSpeedBarButton(int my){
-	ssButtonY = my;
+	ssButtonY = my-speedSetterButton.getTextureHeight()/2;
 }
 
 bool GUI::checkIfHitSideBar(int mx, int my){
