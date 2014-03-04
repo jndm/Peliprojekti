@@ -98,7 +98,7 @@ void Pelimoottori::handleEvent(){
 			sliderinLiikutus = true;
 		}
 	}else if( e.type == SDL_MOUSEBUTTONUP && sliderinLiikutus){
-		sliderinLiikutus = false;;
+		sliderinLiikutus = false;
 	}else if( e.type == SDL_MOUSEMOTION && sliderinLiikutus){
 		int x, y;
         SDL_GetMouseState( &x, &y );
@@ -157,6 +157,7 @@ int Pelimoottori::start()
 		}
 		else
 		{	
+			maailma->createStartingEnemys();
 			mainLoop();
 		}
 	}

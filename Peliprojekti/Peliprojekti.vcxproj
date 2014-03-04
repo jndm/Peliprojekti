@@ -89,6 +89,7 @@
     <ClCompile Include="Pelihahmo.cpp" />
     <ClCompile Include="Pelimoottori.cpp" />
     <ClCompile Include="Tekstuurit.cpp" />
+    <ClCompile Include="Vihollinen.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI.h" />
@@ -99,6 +100,7 @@
     <ClInclude Include="Pelihahmo.h" />
     <ClInclude Include="Pelimoottori.h" />
     <ClInclude Include="Tekstuurit.h" />
+    <ClInclude Include="Vihollinen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

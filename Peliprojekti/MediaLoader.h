@@ -6,8 +6,8 @@
 #include <SDL_image.h>
 #include "Tekstuurit.h"
 #include "Pelihahmo.h"
-#include "Maailma.h"
 #include "GUI.h"
+#include "Maailma.h"
 
 class Maailma;
 
@@ -23,6 +23,7 @@ private:
 	Tekstuurit taustaText;
 	Tekstuurit ssbTeksture;
 	Tekstuurit ssButton;
+	Tekstuurit enemyText;
 	Maailma* maailma;
 	GUI* gui;
 };

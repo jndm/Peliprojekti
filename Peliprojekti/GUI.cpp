@@ -30,25 +30,10 @@ void GUI::moveSpeedBarButton(int my){
 bool GUI::checkIfHitSideBar(int mx, int my){
         bool inside = true;
 
-        if( mx < speedSetterBarArea.x )
-        {
-            inside = false;
-        }
-
-        else if( mx > speedSetterBarArea.x + speedSetterBarArea.w )
-        {
-            inside = false;
-        }
-
-        else if( my < speedSetterBarArea.y )
-        {
-            inside = false;
-        }
-
-        else if( my > speedSetterBarArea.y + speedSetterBarArea.h )
-        {
-            inside = false;
-        }
+        if( mx < speedSetterBarArea.x ){ inside = false; }
+        else if( mx > speedSetterBarArea.x + speedSetterBarArea.w ){ inside = false; }
+        else if( my < speedSetterBarArea.y ){ inside = false; }
+        else if( my > speedSetterBarArea.y + speedSetterBarArea.h ){ inside = false; }
 
 		return inside;
 }

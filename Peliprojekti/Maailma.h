@@ -7,6 +7,11 @@
 #include "Kamera.h"
 #include "Tekstuurit.h"
 #include "GUI.h"
+#include "Vihollinen.h"
+#include <vector>
+#include <time.h>
+
+using namespace std;
 
 class Pelimoottori;
 
@@ -18,6 +23,9 @@ public:
 	void move(float timestep);
 	void setTaustaTexture(Tekstuurit taustaText);
 	Pelihahmo* getPelihahmo();
+	void createStartingEnemys();
+	void setEnemyTexture(Tekstuurit enemyText);
+
 private:
 	int SCREEN_WIDTH;
 	int SCREEN_HEIGHT;
@@ -26,6 +34,9 @@ private:
 	Pelihahmo* pelihahmo;
 	Kamera camera;
 	Tekstuurit tausta;
+	Tekstuurit enemyTexture;
 	GUI* gui;
+	Vihollinen* vihollinen;
+	vector<Vihollinen*> viholliset;
 };
 #endif
