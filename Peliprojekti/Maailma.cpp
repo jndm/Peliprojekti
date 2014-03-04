@@ -14,14 +14,10 @@ void Maailma::render(){
 	camera.moveCamera(SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_WIDTH, LEVEL_HEIGHT);
 	tausta.render( 0, 0, &camera.getCamera() );
 	pelihahmo->render( camera.getCameraX(), camera.getCameraY() );
-	viholliset[0]->render(camera.getCameraX(), camera.getCameraY());
+	for(std::vector<Vihollinen*>::iterator it = viholliset.begin(); it != viholliset.end(); ++it) {
+		(*it)->render(camera.getCameraX(), camera.getCameraY());
+	}
 	gui->render(camera.getCameraX(), camera.getCameraY());
-
-	/*for(std::vector<Vihollinen*>::iterator it = viholliset.begin(); it != viholliset.end(); ++it) {
-		(*it)->render();
-	}*/
-		//printf("arvot %d, %d\n", viholliset[0].getX(), viholliset[0].getY());
-	
 }
 
 void Maailma::move(float timestep){
@@ -35,8 +31,24 @@ Pelihahmo* Maailma::getPelihahmo(){
 void Maailma::createStartingEnemys(){
 	srand(time(0));
 	//viholliset.push_back(new Vihollinen((rand()%LEVEL_WIDTH + 1), (rand()%LEVEL_HEIGHT + 1), enemyTexture));
-	viholliset.push_back(new Vihollinen((rand()%500 + 1), (rand()%500 + 1), enemyTexture));
-	printf("arvot %f, %f, %d\n", viholliset[0]->getX(), viholliset[0]->getY(), viholliset.size());
+	for(int i=0; i<9; i++){
+		int x = rand()%500 + 1;
+		int y = rand()%500 + 1;
+		
+		//printf("%d",i);
+		if(!viholliset.empty()){
+			for(int j=0; j<viholliset.size(); ++j){
+				if(x+viholliset[j]->getWidth() > viholliset[j]->getX() && x < viholliset[j]->getX()+viholliset[j]->getWidth()    
+					&&  y+viholliset[j]->getHeight() > viholliset[j]->getY() && y < viholliset[j]->getY()+viholliset[j]->getHeight())
+				{
+				x = rand()%500 + 1;
+				y = rand()%500 + 1;
+				j=0;
+				}
+			}
+		}
+		viholliset.push_back(new Vihollinen(x, y, enemyTexture));
+	}
 }
 
 void Maailma::setEnemyTexture(Tekstuurit enemyText) {

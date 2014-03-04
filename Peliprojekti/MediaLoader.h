@@ -6,8 +6,8 @@
 #include <SDL_image.h>
 #include "Tekstuurit.h"
 #include "Pelihahmo.h"
-#include "Maailma.h"
 #include "GUI.h"
+#include "Maailma.h"
 
 class Maailma;
 
