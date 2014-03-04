@@ -23,6 +23,7 @@ private:
 	Tekstuurit taustaText;
 	Tekstuurit ssbTeksture;
 	Tekstuurit ssButton;
+	Tekstuurit enemyText;
 	Maailma* maailma;
 	GUI* gui;
 };

@@ -148,6 +148,7 @@ int Pelimoottori::start()
 		}
 		else
 		{	
+			maailma->createStartingEnemys();
 			mainLoop();
 		}
 	}
