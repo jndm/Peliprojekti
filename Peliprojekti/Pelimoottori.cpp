@@ -6,6 +6,7 @@ Pelimoottori::Pelimoottori(void){
 	LEVEL_WIDTH = 2048;
 	LEVEL_HEIGHT = 2048;
 	FRAMETIMESTEP = 1.f/60.f;
+	sliderinLiikutus = false;
 	gui = new GUI();
 	maailma = new Maailma(this);
 	mediaLoader = new MediaLoader(maailma, gui);
@@ -94,7 +95,15 @@ void Pelimoottori::handleEvent(){
 		if(gui->checkIfHitSideBar(x, y)){
 			gui->moveSpeedBarButton(y);
 			maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
+			sliderinLiikutus = true;
 		}
+	}else if( e.type == SDL_MOUSEBUTTONUP && sliderinLiikutus){
+		sliderinLiikutus = false;;
+	}else if( e.type == SDL_MOUSEMOTION && sliderinLiikutus){
+		int x, y;
+        SDL_GetMouseState( &x, &y );
+		gui->moveSpeedBarButton(y);
+		maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
 	}
 	else if( e.type == SDL_KEYDOWN){
 		//Mitä painettiin?

@@ -56,6 +56,7 @@ private:
 	//Event handler
 	SDL_Event e;
 
+	bool sliderinLiikutus;
 	Pelihahmo* pelihahmo;
 	bool quit;
 	Tekstuurit nelio, tausta;
