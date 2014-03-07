@@ -95,6 +95,10 @@ void Pelimoottori::handleEvent(){
 			gui->moveSpeedBarButton(y);
 			maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
 		}
+		else
+		{
+			maailma->getPelihahmo()->hiiri(x,y);
+		}
 	}
 	else if( e.type == SDL_KEYDOWN){
 		//Mitä painettiin?

@@ -41,8 +41,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>E:\Ohjelmointi\C++\Peliprojekti\SDL2_image-2.0.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>E:\Ohjelmointi\C++\Peliprojekti\SDL2_image-2.0.0\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Kirjastot\SDL2_image-2.0.0\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Kirjastot\SDL2_image-2.0.0\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -54,12 +54,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>E:\Ohjelmointi\C++\Peliprojekti\glew-1.10.0\include;E:\Ohjelmointi\C++\Peliprojekti\glut-3.7\include;E:\Ohjelmointi\C++\Peliprojekti\SDL2-2.0.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>E:\Ohjelmointi\C++\Peliprojekti\glew-1.10.0\include;E:\Ohjelmointi\C++\Peliprojekti\glut-3.7\include;C:\Kirjastot\SDL2-2.0.1\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>E:\Ohjelmointi\C++\Peliprojekti\glut-3.7\lib;E:\Ohjelmointi\C++\Peliprojekti\glew-1.10.0\lib\Release\Win32;E:\Ohjelmointi\C++\Peliprojekti\SDL2-2.0.1\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>E:\Ohjelmointi\C++\Peliprojekti\glut-3.7\lib;E:\Ohjelmointi\C++\Peliprojekti\glew-1.10.0\lib\Release\Win32;C:\Kirjastot\SDL2-2.0.1\lib\x86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

@@ -14,7 +14,7 @@ void Maailma::render(){
 	tausta.render( 0, 0, &camera.getCamera() );
 	pelihahmo->render( camera.getCameraX(), camera.getCameraY() );
 	gui->render(camera.getCameraX(), camera.getCameraY());
-	printf("heelP");
+	//printf("heelP");
 }
 
 void Maailma::move(float timestep){
