@@ -15,7 +15,6 @@ Pelihahmo::~Pelihahmo(void){
 void Pelihahmo::move(float fts){
 	x+=dx*fts;
 	y+=dy*fts;
-
 	//printf("x: %f y: %f liikeX: %f liikeY: %f\n",x,y,dx,dy);
 }
 
@@ -58,8 +57,7 @@ void Pelihahmo::setXVelocity(float vx, int direction){
 }
 
 void Pelihahmo::setYVelocity(float vy, int direction){
-	dy = vy*direction;
-	
+	dy = vy*direction;	
 }
 
 void Pelihahmo::ammu(int my){
