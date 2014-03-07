@@ -29,6 +29,16 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 	else{
 		maailma->setTaustaTexture(taustaText);
 	}
+	//Load enemy
+	if( !enemyText.loadFromFile( "Images/Characters/Vihollinen.png", gRenderer ) )
+	{
+		printf( "Failed to load enemy texture!\n" );
+		success = false;
+	}
+	else{
+		maailma->setEnemyTexture(enemyText);
+	}
+
 	//Lataa nopeudensäädinpohja
 	if( !ssbTeksture.loadFromFile( "Images/GUI/SpeedSetterTriagle.png", gRenderer ) )
 	{
@@ -47,5 +57,6 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 	else{
 		gui->setSpeedSetterButtonTeksture(ssButton);
 	}
+
 	return success;
 }

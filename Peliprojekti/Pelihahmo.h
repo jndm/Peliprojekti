@@ -2,27 +2,25 @@
 #define PELIHAHMO_H
 
 #include "Tekstuurit.h"
-#include "Kamera.h"
 
+class Kamera;
 class Pelihahmo{
 private:
-	int width, height;
-	float x, y, dy, dx, suunta;
-	Kamera *kamera;
+	int width, height,kamerax,kameray,locxmap;
+	float x, y, dy, dx,suunta;
+
 
 public:
 	void move(float fts);
-	void hiiri(int x , int y);
 	Pelihahmo(void);
 	~Pelihahmo(void);
 	float getX();
 	float getY();
-	void setCamera(Kamera *camera);
 	int getWidth();
 	int getHeight();
 	void setXVelocity(float vx, int direction);
 	void setYVelocity(float vy, int direction);
-
+	void kaannossuunta(int mx,int my);
 	void render( int camX, int camY );
 	Tekstuurit pelihahmoText;
 	void setTekstuuri(Tekstuurit tekstuuri);
