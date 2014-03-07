@@ -25,6 +25,7 @@ public:
 	Pelihahmo* getPelihahmo();
 	void createStartingEnemys();
 	void setEnemyTexture(Tekstuurit enemyText);
+	int getKameraloc();
 
 private:
 	int SCREEN_WIDTH;
@@ -38,5 +39,6 @@ private:
 	GUI* gui;
 	Vihollinen* vihollinen;
 	vector<Vihollinen*> viholliset;
+
 };
 #endif

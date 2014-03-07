@@ -97,6 +97,8 @@ void Pelimoottori::handleEvent(){
 			maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
 			sliderinLiikutus = true;
 		}
+		else
+			maailma->getPelihahmo()->kaannossuunta(x,y);
 	}else if( e.type == SDL_MOUSEBUTTONUP && sliderinLiikutus){
 		sliderinLiikutus = false;
 	}else if( e.type == SDL_MOUSEMOTION && sliderinLiikutus){
@@ -121,6 +123,7 @@ void Pelimoottori::handleEvent(){
 				maailma->getPelihahmo()->setXVelocity(200, 1);			
 			break;
 		}
+
 	}
 	if( e.type == SDL_KEYUP && e.key.repeat == 0 )
     {
