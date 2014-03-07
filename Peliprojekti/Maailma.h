@@ -10,6 +10,7 @@
 #include "Vihollinen.h"
 #include <vector>
 #include <time.h>
+#include "Tykinkuula.h"
 
 using namespace std;
 
@@ -25,6 +26,7 @@ public:
 	Pelihahmo* getPelihahmo();
 	void createStartingEnemys();
 	void setEnemyTexture(Tekstuurit enemyText);
+	Kamera getCamera(){ return camera; }
 
 private:
 	int SCREEN_WIDTH;

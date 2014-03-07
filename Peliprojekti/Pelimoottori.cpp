@@ -96,7 +96,7 @@ void Pelimoottori::handleEvent(){
 			gui->moveSpeedBarButton(y);
 			maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
 			sliderinLiikutus = true;
-		}
+		} else maailma->getPelihahmo()->ammu(y);
 	}else if( e.type == SDL_MOUSEBUTTONUP && sliderinLiikutus){
 		sliderinLiikutus = false;
 	}else if( e.type == SDL_MOUSEMOTION && sliderinLiikutus){

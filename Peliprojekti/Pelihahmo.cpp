@@ -1,6 +1,6 @@
 #include "Pelihahmo.h"
 
-Pelihahmo::Pelihahmo(void){
+Pelihahmo::Pelihahmo(){
 	x=100;
 	y=100;
 	dx = 0;
@@ -35,16 +35,22 @@ int Pelihahmo::getHeight(){
 	return height;
 }
 
-void Pelihahmo::render(int camX, int camY )
+void Pelihahmo::render(int _camX, int _camY )
 {
+	camX = _camX;
+	camY = _camY;
     //Näytä neliö kameran suhteen
 	pelihahmoText.render( (int)(x - camX), (int)(y - camY) );
 
 }
 
 //Tälle jotain fiksumpaa ratkaisua?
-void Pelihahmo::setTekstuuri(Tekstuurit tekstuuri){
+void Pelihahmo::setCharacterTexture(Tekstuurit tekstuuri){
 	pelihahmoText = tekstuuri;
+}
+
+void Pelihahmo::setCannonballTexture(Tekstuurit tekstuuri){
+	cannonballText = tekstuuri;
 }
 
 void Pelihahmo::setXVelocity(float vx, int direction){
@@ -54,4 +60,11 @@ void Pelihahmo::setXVelocity(float vx, int direction){
 void Pelihahmo::setYVelocity(float vy, int direction){
 	dy = vy*direction;
 	
+}
+
+void Pelihahmo::ammu(int my){
+	if((y-camY)+height/2 >= my)
+		cannonballs.push_back(new Tykinkuula(x+width/2-8, y-16, cannonballText, -1));
+	else
+		cannonballs.push_back(new Tykinkuula(x+width/2-8, y+height, cannonballText, 1));
 }

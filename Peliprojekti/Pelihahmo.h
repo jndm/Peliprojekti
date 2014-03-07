@@ -2,15 +2,23 @@
 #define PELIHAHMO_H
 
 #include "Tekstuurit.h"
+#include "Tykinkuula.h"
+#include <vector>
+
+using namespace std;
 
 class Pelihahmo{
 private:
 	int width, height;
 	float x, y, dy, dx;
+	Tekstuurit pelihahmoText, cannonballText;
+	vector<Tykinkuula*> cannonballs;
+	int camX;
+	int camY;
 
 public:
 	void move(float fts);
-	Pelihahmo(void);
+	Pelihahmo();
 	~Pelihahmo(void);
 	float getX();
 	float getY();
@@ -20,8 +28,10 @@ public:
 	void setYVelocity(float vy, int direction);
 
 	void render( int camX, int camY );
-	Tekstuurit pelihahmoText;
-	void setTekstuuri(Tekstuurit tekstuuri);
+	void setCharacterTexture(Tekstuurit tekstuuri);
+	void setCannonballTexture(Tekstuurit tekstuuri);
+	void ammu(int my);
+	vector<Tykinkuula*> *getCannonballs(){ return &cannonballs; }
 };
 
 #endif

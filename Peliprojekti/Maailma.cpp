@@ -5,6 +5,7 @@ Maailma::Maailma(Pelimoottori* pelimoottori){
 	SCREEN_HEIGHT = pelimoottori->getSCREENHEIGHT();
 	LEVEL_WIDTH = pelimoottori->getLEVELWIDTH();
 	LEVEL_HEIGHT = pelimoottori->getLEVELHEIGHT();
+	
 	pelihahmo = new Pelihahmo();
 	camera.alusta(SCREEN_WIDTH, SCREEN_HEIGHT, pelihahmo);
 	gui = pelimoottori->getGUI();
@@ -17,11 +18,24 @@ void Maailma::render(){
 	for(std::vector<Vihollinen*>::iterator it = viholliset.begin(); it != viholliset.end(); ++it) {
 		(*it)->render(camera.getCameraX(), camera.getCameraY());
 	}
+	for(std::vector<Tykinkuula*>::iterator it = pelihahmo->getCannonballs()->begin(); it != pelihahmo->getCannonballs()->end(); ++it) {
+		(*it)->render(camera.getCameraX(), camera.getCameraY());
+	}
 	gui->render(camera.getCameraX(), camera.getCameraY());
 }
 
 void Maailma::move(float timestep){
 	pelihahmo->move(timestep);
+
+	//liikutetaan tykinkuulia ja tuhotaan ne kun ne tulevat tarpeeksi pitkälle
+	int i=0;
+	for(std::vector<Tykinkuula*>::iterator it = pelihahmo->getCannonballs()->begin(); it != pelihahmo->getCannonballs()->end(); ++i) {
+		(*it)->move(timestep);
+		if((*it)->ifRdyToBeDestroyed()){
+			it = pelihahmo->getCannonballs()->erase(it);
+		}
+		else it++;
+	}
 }
 
 Pelihahmo* Maailma::getPelihahmo(){
