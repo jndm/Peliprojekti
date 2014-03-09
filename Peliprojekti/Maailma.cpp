@@ -24,6 +24,9 @@ void Maailma::render(){
 
 void Maailma::move(float timestep){
 	pelihahmo->move(timestep);
+	for(std::vector<Vihollinen*>::iterator it = viholliset.begin(); it != viholliset.end(); ++it) {
+		(*it)->move(timestep);
+	}
 }
 
 Pelihahmo* Maailma::getPelihahmo(){
@@ -33,23 +36,23 @@ Pelihahmo* Maailma::getPelihahmo(){
 void Maailma::createStartingEnemys(){
 	srand(time(0));
 	//viholliset.push_back(new Vihollinen((rand()%LEVEL_WIDTH + 1), (rand()%LEVEL_HEIGHT + 1), enemyTexture));
-	for(int i=0; i<9; i++){
+	for(int i=0; i<1; i++){
 		int x = rand()%500 + 1;
 		int y = rand()%500 + 1;
-		
+
 		//printf("%d",i);
 		if(!viholliset.empty()){
 			for(int j=0; j<viholliset.size(); ++j){
 				if(x+viholliset[j]->getWidth() > viholliset[j]->getX() && x < viholliset[j]->getX()+viholliset[j]->getWidth()    
 					&&  y+viholliset[j]->getHeight() > viholliset[j]->getY() && y < viholliset[j]->getY()+viholliset[j]->getHeight())
 				{
-				x = rand()%500 + 1;
-				y = rand()%500 + 1;
-				j=0;
+					x = rand()%500 + 1;
+					y = rand()%500 + 1;
+					j=0;
 				}
 			}
 		}
-		viholliset.push_back(new Vihollinen(x, y, enemyTexture));
+		viholliset.push_back(new Vihollinen(x, y, pelihahmo, enemyTexture));
 	}
 }
 
