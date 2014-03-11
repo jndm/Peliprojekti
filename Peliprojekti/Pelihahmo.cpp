@@ -64,11 +64,15 @@ void Pelihahmo::setYVelocity(float vy, int direction){
 
 void Pelihahmo::ammu(int my){
 
-	if(SDL_GetTicks() > lastShootTime + shootingDelay){
-		if((y-camY)+height/2 >= my)
-			cannonballs.push_back(new Tykinkuula(x+width/2-8, y-16, &cannonballText, -1));
+	//if(SDL_GetTicks() > lastShootTime + shootingDelay){
+		if((y-camY)+height/2 >= my){
+			printf("asdas");
+			cannonballs.push_back(new Tykinkuula(this, &cannonballText, -1));
+		}
 		else
-			cannonballs.push_back(new Tykinkuula(x+width/2-8, y+height, &cannonballText, 1));
+			cannonballs.push_back(new Tykinkuula(this, &cannonballText, 1));
 		lastShootTime = SDL_GetTicks();
-	}
+	//}
 }
+
+
