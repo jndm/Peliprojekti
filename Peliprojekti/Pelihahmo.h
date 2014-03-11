@@ -6,7 +6,7 @@
 class Kamera;
 class Pelihahmo{
 private:
-	int width, height,kamerax,kameray,locxmap;
+	int width, height,kamerax,kameray,locxmap,locymap;
 	float x, y, dy, dx,suunta;
 
 
@@ -20,7 +20,8 @@ public:
 	int getHeight();
 	void setXVelocity(float vx, int direction);
 	void setYVelocity(float vy, int direction);
-	void kaannossuunta(int mx,int my);
+	int kaannossuunta();
+	void setKohde(int mx, int my);
 	void render( int camX, int camY );
 	Tekstuurit pelihahmoText;
 	void setTekstuuri(Tekstuurit tekstuuri);

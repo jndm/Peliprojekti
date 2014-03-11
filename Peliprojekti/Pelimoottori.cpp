@@ -45,7 +45,7 @@ bool Pelimoottori::init()
 		else
 		{
 			//Create renderer for window
-			gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+			gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_SOFTWARE/*ACCELERATED | SDL_RENDERER_PRESENTVSYNC */);
 			if( gRenderer == NULL )
 			{
 				printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -95,10 +95,11 @@ void Pelimoottori::handleEvent(){
 		if(gui->checkIfHitSideBar(x, y)){
 			gui->moveSpeedBarButton(y);
 			maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
+			maailma->getPelihahmo()->setYVelocity((480-y)/2, 1);
 			sliderinLiikutus = true;
 		}
 		else
-			maailma->getPelihahmo()->kaannossuunta(x,y);
+			maailma->getPelihahmo()->setKohde(x,y);
 	}else if( e.type == SDL_MOUSEBUTTONUP && sliderinLiikutus){
 		sliderinLiikutus = false;
 	}else if( e.type == SDL_MOUSEMOTION && sliderinLiikutus){
@@ -106,6 +107,7 @@ void Pelimoottori::handleEvent(){
         SDL_GetMouseState( &x, &y );
 		gui->moveSpeedBarButton(y);
 		maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
+		maailma->getPelihahmo()->setYVelocity((480-y)/2, 1);
 	}
 	else if( e.type == SDL_KEYDOWN){
 		//Mitä painettiin?
