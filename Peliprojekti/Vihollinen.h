@@ -10,7 +10,7 @@ private:
 
 public:
 	void move(float fts);
-	Vihollinen(float xp, float yp, Tekstuurit text);
+	Vihollinen(float xp, float yp, Tekstuurit* text);
 	float getX();
 	float getY();
 	int getWidth();
@@ -19,7 +19,7 @@ public:
 	void setYVelocity(float vy, int direction);
 
 	void render(int cx, int cy);
-	Tekstuurit vihollinenText;
+	Tekstuurit* vihollinenText;
 };
 
 #endif

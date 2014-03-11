@@ -1,6 +1,6 @@
 #include "Tykinkuula.h"
 
-Tykinkuula::Tykinkuula(float _x, float _y, Tekstuurit text, int _direction){
+Tykinkuula::Tykinkuula(float _x, float _y, Tekstuurit* text, int _direction){
 	x = _x;
 	y = _y;
 	tykinkuulaText = text;
@@ -24,7 +24,7 @@ void Tykinkuula::move(float fts){
 
 void Tykinkuula::render(int camx, int camy){
     //Näytä neliö kameran suhteen
-	tykinkuulaText.render( x - camx, y - camy , &gSpriteClips[frame/15]);
+	tykinkuulaText->render( x - camx, y - camy , &gSpriteClips[frame/15]);
 	frame++;
 	if( frame / 15 >= FRAMES_IN_SPRITESHEET ){
 		nopeus = 0;

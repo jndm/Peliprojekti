@@ -1,6 +1,6 @@
 #include "Vihollinen.h"
 
-Vihollinen::Vihollinen(float xp, float yp, Tekstuurit text){
+Vihollinen::Vihollinen(float xp, float yp, Tekstuurit* text){
 	x=xp;
 	y=yp;
 	dx = 0;
@@ -36,7 +36,7 @@ int Vihollinen::getHeight(){
 void Vihollinen::render(int cx, int cy)
 {
     //Näytä neliö kameran suhteen
-	vihollinenText.render( x - cx, y - cy );
+	vihollinenText->render( x - cx, y - cy );
 
 }
 

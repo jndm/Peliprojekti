@@ -15,6 +15,7 @@ private:
 	vector<Tykinkuula*> cannonballs;
 	int camX;
 	int camY;
+	Uint32 lastShootTime, shootingDelay;
 
 public:
 	void move(float fts);

@@ -61,7 +61,7 @@ void Maailma::createStartingEnemys(){
 				}
 			}
 		}
-		viholliset.push_back(new Vihollinen(x, y, enemyTexture));
+		viholliset.push_back(new Vihollinen(x, y, &enemyTexture));
 	}
 }
 

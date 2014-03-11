@@ -7,14 +7,14 @@ const int FRAMES_IN_SPRITESHEET = 3;
 
 class Tykinkuula{
 public:
-	Tykinkuula(float _x, float _y, Tekstuurit text, int _direction);
+	Tykinkuula(float _x, float _y, Tekstuurit* text, int _direction);
 	void move(float fts);
 	void render(int camx, int camy);
 	
 	bool ifRdyToBeDestroyed();
 
 private:
-	Tekstuurit tykinkuulaText;
+	Tekstuurit* tykinkuulaText;
 	float nopeus, x, y;
 	float getX(){ return x; }
 	float getY(){ return y; }
