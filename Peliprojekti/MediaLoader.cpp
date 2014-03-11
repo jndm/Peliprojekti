@@ -57,6 +57,14 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 	else{
 		gui->setSpeedSetterButtonTeksture(ssButton);
 	}
-
+	//Load target texture
+	if( !targetText.loadFromFile( "Images/Characters/target.png", gRenderer ) )
+	{
+		printf( "Failed to load target texture!\n" );
+		success = false;
+	}
+	else{
+		maailma->setTargetTexture(targetText);
+	}
 	return success;
 }

@@ -6,6 +6,7 @@
 #include <complex>
 
 //using namespace std;
+class Maailma;
 
 class Vihollinen{
 private:
@@ -13,12 +14,13 @@ private:
 	float x, y, dy, dx, centerX, centerY, targetX, targetY, suunta;
 	void calculateTarget();
 	Pelihahmo* pelihahmo;
+	Maailma *maailma;
 	void setXVelocity(float vx);
 	void setYVelocity(float vy);
 
 public:
 	void move(float fts);
-	Vihollinen(float xp, float yp, Pelihahmo* _pelihahmo, Tekstuurit text);
+	Vihollinen(float xp, float yp, float _suunta, Pelihahmo* _pelihahmo, Maailma *_maailma);
 	float getX();
 	float getY();
 	int getWidth();

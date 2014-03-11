@@ -37,8 +37,9 @@ void Maailma::createStartingEnemys(){
 	srand(time(0));
 	//viholliset.push_back(new Vihollinen((rand()%LEVEL_WIDTH + 1), (rand()%LEVEL_HEIGHT + 1), enemyTexture));
 	for(int i=0; i<1; i++){
-		int x = rand()%500 + 1;
-		int y = rand()%500 + 1;
+		float x = rand()%500 + 1;
+		float y = rand()%500 + 1;
+		float suunta = rand()%8*45;
 
 		//printf("%d",i);
 		if(!viholliset.empty()){
@@ -52,12 +53,16 @@ void Maailma::createStartingEnemys(){
 				}
 			}
 		}
-		viholliset.push_back(new Vihollinen(x, y, pelihahmo, enemyTexture));
+		viholliset.push_back(new Vihollinen(x, y, suunta, pelihahmo, this));
 	}
 }
 
 void Maailma::setEnemyTexture(Tekstuurit enemyText) {
 	enemyTexture = enemyText;
+}
+
+void Maailma::setTargetTexture(Tekstuurit targetText) {
+	targetTexture = targetText;
 }
 
 void Maailma::setTaustaTexture(Tekstuurit taustaText) {

@@ -24,6 +24,7 @@ private:
 	Tekstuurit ssbTeksture;
 	Tekstuurit ssButton;
 	Tekstuurit enemyText;
+	Tekstuurit targetText;
 	Maailma* maailma;
 	GUI* gui;
 };

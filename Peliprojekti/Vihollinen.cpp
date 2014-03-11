@@ -1,8 +1,11 @@
 #include "Vihollinen.h"
 #include "Pelihahmo.h"
+#include "Maailma.h"
 #include <math.h>
 
-Vihollinen::Vihollinen(float xp, float yp, Pelihahmo* _pelihahmo, Tekstuurit text){
+const float AMPUMISETAISYYS = 200; 
+
+Vihollinen::Vihollinen(float xp, float yp, float _suunta, Pelihahmo* _pelihahmo, Maailma *_maailma) {
 	x=xp;
 	y=yp;
 	dx = 1;
@@ -13,13 +16,14 @@ Vihollinen::Vihollinen(float xp, float yp, Pelihahmo* _pelihahmo, Tekstuurit tex
 	height = 50;
 	centerX = x + width/2;
 	centerY = y + height/2;
-	vihollinenText = text;
+	//vihollinenText = text;
+	maailma = _maailma;
 	pelihahmo = _pelihahmo;
-	//suunta = random(0-7)*45°
+	suunta = _suunta;
 	double roots[4];
 }
 
-void Vihollinen::move(float fts){
+void Vihollinen::move(float fts) {
 	calculateTarget();
 	x+=dx*fts;
 	y+=dy*fts;
@@ -29,45 +33,60 @@ void Vihollinen::move(float fts){
 }
 
 void Vihollinen::calculateTarget() {
-	targetX = pelihahmo->getX() + pelihahmo->getWidth()/2;
-	targetY = pelihahmo->getY() + pelihahmo->getHeight()/2;
-	float angle = atan2(targetY - centerY, targetX - centerX);
+	float pelaajaX = pelihahmo->getX() + pelihahmo->getWidth()/2;
+	float pelaajaY = pelihahmo->getY() + pelihahmo->getHeight()/2;
+	float angle = atan2(pelaajaY - centerY, pelaajaX - centerX);			// suunta radiaaneissa, jossa pelaaja on
+	float etaisyys = sqrt(pow(pelaajaX - centerX, 2) + pow(pelaajaY - centerY, 2));
 	//(a, b) = pelaajan koordinantit
 	//(c, d) = omat koordinantit
 	//sin f = ampumisetäisyys / etäisyyspelaajasta
 	//tan f = (ampumisetäisyys)/(etäisyyspelaajasta * cos f)
-	//x^2 - 2ax + a^2 + y^2 - 2by + b^2 - (tan f)^2*((x-c)^2+(y-d)^2) = 0
-	dx = 10*cos(angle);
-	dy = 10*sin(angle);
+	//x^2 - 2ax + a^2 + y^2 - 2by + b^2 - (tan f)^2 * ((x - c)^2 + (y - d)^2) = 0
+	float pisteetX[2];
+	float pisteetY[2];
+	pisteetX[0] = pelaajaX + cos((angle - M_PI) - M_PI/4.) * AMPUMISETAISYYS;
+	pisteetY[0] = pelaajaY + sin((angle - M_PI) - M_PI/4.) * AMPUMISETAISYYS;
+	pisteetX[1] = pelaajaX + cos((angle - M_PI) - M_PI/4.) * AMPUMISETAISYYS;
+	pisteetY[1] = pelaajaY + sin((angle - M_PI) - M_PI/4.) * AMPUMISETAISYYS;
+	if(abs(atan2(pisteetY[0] - centerY, pisteetX[0] - centerX)) - suunta < abs(atan2(pisteetY[1] - centerY, pisteetX[1] - centerX)) - suunta) {
+		targetX = pisteetX[0];
+		targetY = pisteetY[0];
+	} else {
+		targetX = pisteetX[1];
+		targetY = pisteetY[1];
+	}
+	//targetX = pelaajaX + cos(angle-45) * AMPUMISETAISYYS;
+	//targetY = pelaajaY + sin(angle-45) * AMPUMISETAISYYS;
+	dx = 150*cos(atan2(targetY - centerY, targetX - centerX));
+	dy = 150*sin(atan2(targetY - centerY, targetX - centerX));
 }
 
-float Vihollinen::getX(){
+float Vihollinen::getX() {
 	return x;
 }
 
-float Vihollinen::getY(){
+float Vihollinen::getY() {
 	return y;
 }
 
-int Vihollinen::getWidth(){
+int Vihollinen::getWidth() {
 	return width;
 }
 
-int Vihollinen::getHeight(){
+int Vihollinen::getHeight() {
 	return height;
 }
 
-void Vihollinen::render(int cx, int cy)
-{
-	//Näytä neliö kameran suhteen
-	vihollinenText.render( x - cx, y - cy );
+void Vihollinen::render(int cx, int cy) {
+	maailma->getEnemyTexture()->render( x - cx, y - cy );	//Näytä neliö kameran suhteen
+	maailma->getTargetTexture()->render( targetX - cx, targetY - cy);
 }
 
-void Vihollinen::setXVelocity(float vx){
+void Vihollinen::setXVelocity(float vx) {
 	dx = vx;
 }
 
-void Vihollinen::setYVelocity(float vy){
+void Vihollinen::setYVelocity(float vy) {
 	dy = vy;
 }
 
@@ -122,10 +141,10 @@ unsigned int cubicSolver(double * ce, double *roots) {
 		return ret;
 	}
 	ret=3;
-    std::complex<double> u(q,0),rt[3];
+	std::complex<double> u(q,0),rt[3];
 	u=pow(-0.5*u-sqrt(0.25*u*u+p*p*p/27),1./3);
 	rt[0]=u-p/(3.*u)-shift;
-    std::complex<double> w(-0.5,sqrt(3.)/2);
+	std::complex<double> w(-0.5,sqrt(3.)/2);
 	rt[1]=u*w-p/(3.*u*w)-shift;
 	rt[2]=u/w-p*w/(3.*u)-shift;
 	//	std::cout<<"Roots:\n";
@@ -138,7 +157,6 @@ unsigned int cubicSolver(double * ce, double *roots) {
 	roots[2]=rt[2].real();
 	return ret;
 }
-
 unsigned int quarticSolver(double * ce, double *roots) {
 	//quartic solver
 	// x^4 + ce[0] x^3 + ce[1] x^2 + ce[2] x + ce[3] = 0
@@ -200,38 +218,38 @@ unsigned int quarticSolver(double * ce, double *roots) {
 	double cubic[3]= {2.*p,p*p-4.*r,-q*q},croots[3];
 	ret = cubicSolver(cubic,croots);
 	for(unsigned int i=0; i<ret; i++)
-	if (ret==1) { //one real root from cubic
-		if (croots[0]< 0.) {//this should not happen
-			return 0;
+		if (ret==1) { //one real root from cubic
+			if (croots[0]< 0.) {//this should not happen
+				return 0;
+			}
+			double sqrtz0=sqrt(croots[0]);
+			double ce2[2];
+			ce2[0]=	-sqrtz0;
+			ce2[1]=0.5*(p+croots[0])+0.5*q/sqrtz0;
+			ret=quadraticSolver(ce2,roots);
+			if (! ret ) {
+				ce2[0]=	sqrtz0;
+				ce2[1]=0.5*(p+croots[0])-0.5*q/sqrtz0;
+				ret=quadraticSolver(ce2,roots);
+			}
+			ret=2;
+			for(unsigned int i=0; i<ret; i++) roots[i] -= shift;
+			return ret;
 		}
-		double sqrtz0=sqrt(croots[0]);
-		double ce2[2];
-		ce2[0]=	-sqrtz0;
-		ce2[1]=0.5*(p+croots[0])+0.5*q/sqrtz0;
-		ret=quadraticSolver(ce2,roots);
-		if (! ret ) {
+		if ( croots[0]> 0. && croots[1] > 0. ) {
+			double sqrtz0=sqrt(croots[0]);
+			double ce2[2];
+			ce2[0]=	-sqrtz0;
+			ce2[1]=0.5*(p+croots[0])+0.5*q/sqrtz0;
+			ret=quadraticSolver(ce2,roots);
 			ce2[0]=	sqrtz0;
 			ce2[1]=0.5*(p+croots[0])-0.5*q/sqrtz0;
-			ret=quadraticSolver(ce2,roots);
+			ret=quadraticSolver(ce2,roots+2);
+			ret=4;
+			for(unsigned int i=0; i<ret; i++) roots[i] -= shift;
+			return ret;
 		}
-		ret=2;
-		for(unsigned int i=0; i<ret; i++) roots[i] -= shift;
-		return ret;
-	}
-	if ( croots[0]> 0. && croots[1] > 0. ) {
-		double sqrtz0=sqrt(croots[0]);
-		double ce2[2];
-		ce2[0]=	-sqrtz0;
-		ce2[1]=0.5*(p+croots[0])+0.5*q/sqrtz0;
-		ret=quadraticSolver(ce2,roots);
-		ce2[0]=	sqrtz0;
-		ce2[1]=0.5*(p+croots[0])-0.5*q/sqrtz0;
-		ret=quadraticSolver(ce2,roots+2);
-		ret=4;
-		for(unsigned int i=0; i<ret; i++) roots[i] -= shift;
-		return ret;
-	}
-	return 0;
+		return 0;
 
 
 
@@ -240,43 +258,43 @@ unsigned int quarticSolver(double * ce, double *roots) {
 /*
 int main(int argc, char * argv[])
 {
-	unsigned int counts;
-	double ce[4]= {1.87832,-0.0950376,-1.87832,-0.882024};
-	unsigned int j=5;
-	if(argc < j ) j=argc;
-	for(unsigned int i=1; i< j; i++) {
-		ce[i-1]=strtod(argv[i],NULL);
-	}
-	std::cout<<"x^4";
-	if(argc == 1) j=4;
-	else j--;
-	for(unsigned int i=0; i< j; i++) {
-		std::cout<<" + ("<<ce[i]<<")";
-		if ( i != 3 ) {
-			std::cout<<"*x^"<<3-i;
-		} else {
-			std::cout<<" =0\n";
-		}
-	}
+unsigned int counts;
+double ce[4]= {1.87832,-0.0950376,-1.87832,-0.882024};
+unsigned int j=5;
+if(argc < j ) j=argc;
+for(unsigned int i=1; i< j; i++) {
+ce[i-1]=strtod(argv[i],NULL);
+}
+std::cout<<"x^4";
+if(argc == 1) j=4;
+else j--;
+for(unsigned int i=0; i< j; i++) {
+std::cout<<" + ("<<ce[i]<<")";
+if ( i != 3 ) {
+std::cout<<"*x^"<<3-i;
+} else {
+std::cout<<" =0\n";
+}
+}
 
-	double roots[4];
-	switch (j) {
-	case 4:
-		std::cout<<"quadratic:\n";
-		counts=quarticSolver(ce,roots);
-		break;
-	case 3:
-		std::cout<<"cubic:\n";
-		counts=cubicSolver(ce,roots);
-		break;
-	default:
-		std::cout<<"quartic:\n";
-		counts=quadraticSolver(ce,roots);
-	}
-	std::cout<<"Number of real roots="<<counts<<std::endl;
-	for(unsigned int i=0; i<counts; i++) {
-		std::cout<<"x= "<<roots[i]<<'\t';
-	}
-	std::cout<<std::endl;
-	return 0;
+double roots[4];
+switch (j) {
+case 4:
+std::cout<<"quadratic:\n";
+counts=quarticSolver(ce,roots);
+break;
+case 3:
+std::cout<<"cubic:\n";
+counts=cubicSolver(ce,roots);
+break;
+default:
+std::cout<<"quartic:\n";
+counts=quadraticSolver(ce,roots);
+}
+std::cout<<"Number of real roots="<<counts<<std::endl;
+for(unsigned int i=0; i<counts; i++) {
+std::cout<<"x= "<<roots[i]<<'\t';
+}
+std::cout<<std::endl;
+return 0;
 }*/
