@@ -1,4 +1,3 @@
-#include "Tekstuurit.h"
 #ifndef PELIHAHMO_H
 #define PELIHAHMO_H
 
