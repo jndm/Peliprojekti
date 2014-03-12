@@ -1,3 +1,4 @@
+#include "Tekstuurit.h"
 #ifndef PELIHAHMO_H
 #define PELIHAHMO_H
 
@@ -15,6 +16,7 @@ private:
 	vector<Tykinkuula*> cannonballs;
 	int camX;
 	int camY;
+	Uint32 lastShootTime, shootingDelay;
 
 public:
 	void move(float fts);
