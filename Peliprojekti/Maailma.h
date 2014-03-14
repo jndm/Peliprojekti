@@ -26,6 +26,7 @@ public:
 	Pelihahmo* getPelihahmo();
 	void createStartingEnemys();
 	void setEnemyTexture(Tekstuurit enemyText);
+	int getKameraloc();
 	Kamera getCamera(){ return camera; }
 
 private:
@@ -40,5 +41,6 @@ private:
 	GUI* gui;
 	Vihollinen* vihollinen;
 	vector<Vihollinen*> viholliset;
+
 };
 #endif

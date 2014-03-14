@@ -5,10 +5,14 @@
 #include "Tykinkuula.h"
 #include <vector>
 
+class Kamera;
 using namespace std;
 
 class Pelihahmo{
 private:
+	int width, height,kamerax,kameray,locxmap,locymap;
+	float x, y, dy, dx,suunta;
+
 	int width, height;
 	float x, y, dy, dx;
 	Tekstuurit pelihahmoText, cannonballText;
@@ -27,7 +31,8 @@ public:
 	int getHeight();
 	void setXVelocity(float vx, int direction);
 	void setYVelocity(float vy, int direction);
-
+	int kaannossuunta();
+	void setKohde(int mx, int my);
 	void render( int camX, int camY );
 	void setCharacterTexture(Tekstuurit tekstuuri);
 	void setCannonballTexture(Tekstuurit tekstuuri);

@@ -11,6 +11,8 @@ Maailma::Maailma(Pelimoottori* pelimoottori){
 	gui = pelimoottori->getGUI();
 }
 
+
+
 void Maailma::render(){
 	camera.moveCamera(SCREEN_WIDTH, SCREEN_HEIGHT, LEVEL_WIDTH, LEVEL_HEIGHT);
 	tausta.render( 0, 0, &camera.getCamera() );

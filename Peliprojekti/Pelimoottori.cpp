@@ -95,8 +95,11 @@ void Pelimoottori::handleEvent(){
 		if(gui->checkIfHitSideBar(x, y)){
 			gui->moveSpeedBarButton(y);
 			maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
+			maailma->getPelihahmo()->setYVelocity((480-y)/2, 1);
 			sliderinLiikutus = true;
 		} else maailma->getPelihahmo()->ammu(y);
+			maailma->getPelihahmo()->setKohde(x,y);
+		}
 	}else if( e.type == SDL_MOUSEBUTTONUP && sliderinLiikutus){
 		sliderinLiikutus = false;
 	}else if( e.type == SDL_MOUSEMOTION && sliderinLiikutus){
@@ -104,6 +107,7 @@ void Pelimoottori::handleEvent(){
         SDL_GetMouseState( &x, &y );
 		gui->moveSpeedBarButton(y);
 		maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
+		maailma->getPelihahmo()->setYVelocity((480-y)/2, 1);
 	}
 	else if( e.type == SDL_KEYDOWN){
 		//Mitä painettiin?
@@ -121,6 +125,7 @@ void Pelimoottori::handleEvent(){
 				maailma->getPelihahmo()->setXVelocity(200, 1);			
 			break;
 		}
+
 	}
 	if( e.type == SDL_KEYUP && e.key.repeat == 0 )
     {

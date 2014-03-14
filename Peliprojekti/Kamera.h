@@ -5,6 +5,7 @@
 #include "Pelihahmo.h"
 #include <SDL.h>
 #include <SDL_image.h>
+#include <utility>
 
 class Kamera{
 public:
