@@ -26,8 +26,8 @@ public:
 	Pelihahmo* getPelihahmo();
 	void createStartingEnemys();
 	void setEnemyTexture(Tekstuurit enemyText);
-	int getKameraloc();
 	Kamera getCamera(){ return camera; }
+	int getKameraloc();
 
 private:
 	int SCREEN_WIDTH;
