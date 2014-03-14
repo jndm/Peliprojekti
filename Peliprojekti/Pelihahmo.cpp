@@ -41,7 +41,7 @@ void Pelihahmo::render(int _camX, int _camY )
 	camX = _camX;
 	camY = _camY;
     //Näytä neliö kameran suhteen
-	pelihahmoText.render( (int)(x - camX), (int)(y - camY) );
+	pelihahmoText.render( (int)(x - camX), (int)(y - camY) , NULL, 0);
 
 }
 
@@ -66,11 +66,10 @@ void Pelihahmo::ammu(int my){
 
 	//if(SDL_GetTicks() > lastShootTime + shootingDelay){
 		if((y-camY)+height/2 >= my){
-			printf("asdas");
-			cannonballs.push_back(new Tykinkuula(this, &cannonballText, -1));
+			cannonballs.push_back(new Tykinkuula(this, &cannonballText, -1, -1));
 		}
 		else
-			cannonballs.push_back(new Tykinkuula(this, &cannonballText, 1));
+			cannonballs.push_back(new Tykinkuula(this, &cannonballText, 1, 1));
 		lastShootTime = SDL_GetTicks();
 	//}
 }
