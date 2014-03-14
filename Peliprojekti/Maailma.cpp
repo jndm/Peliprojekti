@@ -5,7 +5,7 @@ Maailma::Maailma(Pelimoottori* pelimoottori){
 	SCREEN_HEIGHT = pelimoottori->getSCREENHEIGHT();
 	LEVEL_WIDTH = pelimoottori->getLEVELWIDTH();
 	LEVEL_HEIGHT = pelimoottori->getLEVELHEIGHT();
-	
+
 	pelihahmo = new Pelihahmo();
 	camera.alusta(SCREEN_WIDTH, SCREEN_HEIGHT, pelihahmo);
 	gui = pelimoottori->getGUI();
@@ -50,7 +50,7 @@ void Maailma::createStartingEnemys(){
 	for(int i=0; i<9; i++){
 		int x = rand()%500 + 1;
 		int y = rand()%500 + 1;
-		
+
 		//printf("%d",i);
 		if(!viholliset.empty()){
 			for(int j=0; j<viholliset.size(); ++j){

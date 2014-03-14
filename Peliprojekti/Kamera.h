@@ -15,7 +15,7 @@ public:
 	SDL_Rect getCamera() { return camera; }
 	int getCameraX(){return camera.x;}
 	int getCameraY(){return camera.y;}
-	
+
 private:
 	SDL_Rect camera;
 };

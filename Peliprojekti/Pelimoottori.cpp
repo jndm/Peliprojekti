@@ -97,7 +97,8 @@ void Pelimoottori::handleEvent(){
 			maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
 			maailma->getPelihahmo()->setYVelocity((480-y)/2, 1);
 			sliderinLiikutus = true;
-		} else maailma->getPelihahmo()->ammu(y);
+		} else 
+			maailma->getPelihahmo()->ammu(y);
 			maailma->getPelihahmo()->setKohde(x,y);
 		}
 	}else if( e.type == SDL_MOUSEBUTTONUP && sliderinLiikutus){
@@ -186,4 +187,3 @@ void Pelimoottori::mainLoop(){
 			SDL_RenderPresent( gRenderer );
 		}
 }
-
