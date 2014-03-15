@@ -2,17 +2,28 @@
 #define PELIHAHMO_H
 
 #include "Tekstuurit.h"
+#include "Tykinkuula.h"
+#include <vector>
 
 class Kamera;
+using namespace std;
+
 class Pelihahmo{
 private:
 	int width, height,kamerax,kameray,locxmap,locymap;
 	float x, y, dy, dx,suunta;
 
+	int width, height;
+	float x, y, dy, dx;
+	Tekstuurit pelihahmoText, cannonballText;
+	vector<Tykinkuula*> cannonballs;
+	int camX;
+	int camY;
+	Uint32 lastShootTime, shootingDelay;
 
 public:
 	void move(float fts);
-	Pelihahmo(void);
+	Pelihahmo();
 	~Pelihahmo(void);
 	float getX();
 	float getY();
@@ -23,8 +34,10 @@ public:
 	int kaannossuunta();
 	void setKohde(int mx, int my);
 	void render( int camX, int camY );
-	Tekstuurit pelihahmoText;
-	void setTekstuuri(Tekstuurit tekstuuri);
+	void setCharacterTexture(Tekstuurit tekstuuri);
+	void setCannonballTexture(Tekstuurit tekstuuri);
+	void ammu(int my);
+	vector<Tykinkuula*> *getCannonballs(){ return &cannonballs; }
 };
 
 #endif

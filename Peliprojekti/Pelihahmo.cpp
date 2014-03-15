@@ -1,12 +1,14 @@
 #include "Pelihahmo.h"
 
-Pelihahmo::Pelihahmo(void){
+Pelihahmo::Pelihahmo(){
 	x=100;
 	y=100;
 	dx = 0;
 	dy = 0;
 	width = 50;
 	height = 50;
+	lastShootTime = 0;
+	shootingDelay = 1000;
 	suunta=0;
 	locxmap=x;
 	locymap=y;
@@ -146,28 +148,44 @@ int Pelihahmo::getHeight(){
 	return height;
 }
 
-void Pelihahmo::render(int camX, int camY )
+void Pelihahmo::render(int _camX, int _camY )
 {
 	kamerax=camX;
 	kameray=camY;
+	camX = _camX;
+	camY = _camY;
     //Näytä neliö kameran suhteen
-	pelihahmoText.render( (int)(x - camX), (int)(y - camY) );
+	pelihahmoText.render( (int)(x - camX), (int)(y - camY) , NULL, 0);
 
 }
 
 //Tälle jotain fiksumpaa ratkaisua?
-void Pelihahmo::setTekstuuri(Tekstuurit tekstuuri){
+void Pelihahmo::setCharacterTexture(Tekstuurit tekstuuri){
 	pelihahmoText = tekstuuri;
 }
 
+void Pelihahmo::setCannonballTexture(Tekstuurit tekstuuri){
+	cannonballText = tekstuuri;
+}
+
 void Pelihahmo::setXVelocity(float vx, int direction){
-	
+
 	dx = vx;
-	
+
 }
 
 void Pelihahmo::setYVelocity(float vy, int direction){
-	
+
 	dy = vy;
-	
+
+void Pelihahmo::ammu(int my){
+
+	//if(SDL_GetTicks() > lastShootTime + shootingDelay){
+		if((y-camY)+height/2 >= my){
+			cannonballs.push_back(new Tykinkuula(this, &cannonballText, -1, -1));
+		}
+		else
+			cannonballs.push_back(new Tykinkuula(this, &cannonballText, 1, 1));
+		lastShootTime = SDL_GetTicks();
+	//}
 }

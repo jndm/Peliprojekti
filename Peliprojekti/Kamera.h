@@ -1,5 +1,7 @@
+#pragma once
 #ifndef KAMERA_H
 #define KAMERA_H
+
 #include "Pelihahmo.h"
 #include <SDL.h>
 #include <SDL_image.h>

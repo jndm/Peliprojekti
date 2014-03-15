@@ -17,7 +17,7 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 		success = false;
 	}
 	else{
-		maailma->getPelihahmo()->setTekstuuri(pelihahmoText);
+		maailma->getPelihahmo()->setCharacterTexture(pelihahmoText);
 	}
 
 	//Load background texture
@@ -56,6 +56,15 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 	}
 	else{
 		gui->setSpeedSetterButtonTeksture(ssButton);
+	}
+	//Lataa tykinkuulan spritesheet
+	if( !cannonballText.loadFromFile( "Images/Cannonball/cannonball.png", gRenderer ) )
+	{
+		printf( "Failed to load cannonball -sheet texture!\n" );
+		success = false;
+	}
+	else{
+		maailma->getPelihahmo()->setCannonballTexture(cannonballText);
 	}
 
 	return success;

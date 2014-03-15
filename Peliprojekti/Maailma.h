@@ -10,6 +10,7 @@
 #include "Vihollinen.h"
 #include <vector>
 #include <time.h>
+#include "Tykinkuula.h"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ public:
 	void createStartingEnemys();
 	void setEnemyTexture(Tekstuurit enemyText);
 	int getKameraloc();
+	Kamera getCamera(){ return camera; }
 
 private:
 	int SCREEN_WIDTH;

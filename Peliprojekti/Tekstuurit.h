@@ -19,7 +19,6 @@ public:
 
 
 private:
-
 	//Tekstuureja varten tarvittavat muuttujat
 	int textureHeight, textureWidth;
 	SDL_Texture* mTexture;
