@@ -12,9 +12,6 @@ class Pelihahmo{
 private:
 	int width, height,kamerax,kameray,locxmap,locymap;
 	float x, y, dy, dx,suunta;
-
-	int width, height;
-	float x, y, dy, dx;
 	Tekstuurit pelihahmoText, cannonballText;
 	vector<Tykinkuula*> cannonballs;
 	int camX;
@@ -36,8 +33,10 @@ public:
 	void render( int camX, int camY );
 	void setCharacterTexture(Tekstuurit tekstuuri);
 	void setCannonballTexture(Tekstuurit tekstuuri);
-	void ammu(int my);
+	void ammu(int tykki);
 	vector<Tykinkuula*> *getCannonballs(){ return &cannonballs; }
+	float getXvelocity(){ return dx; }
+	float getYvelocity(){ return dy; }
 };
 
 #endif

@@ -150,12 +150,10 @@ int Pelihahmo::getHeight(){
 
 void Pelihahmo::render(int _camX, int _camY )
 {
-	kamerax=camX;
-	kameray=camY;
-	camX = _camX;
-	camY = _camY;
+	kamerax = _camX;
+	kameray = _camY;
     //Näytä neliö kameran suhteen
-	pelihahmoText.render( (int)(x - camX), (int)(y - camY) , NULL, 0);
+	pelihahmoText.render( (int)(x - kamerax), (int)(y - kameray) , NULL, suunta);
 
 }
 
@@ -178,14 +176,11 @@ void Pelihahmo::setYVelocity(float vy, int direction){
 
 	dy = vy;
 
-void Pelihahmo::ammu(int my){
+}
+void Pelihahmo::ammu(int tykki){
 
-	//if(SDL_GetTicks() > lastShootTime + shootingDelay){
-		if((y-camY)+height/2 >= my){
-			cannonballs.push_back(new Tykinkuula(this, &cannonballText, -1, -1));
-		}
-		else
-			cannonballs.push_back(new Tykinkuula(this, &cannonballText, 1, 1));
+	if(SDL_GetTicks() > lastShootTime + shootingDelay){
+		cannonballs.push_back(new Tykinkuula(this, &cannonballText, suunta, tykki));
 		lastShootTime = SDL_GetTicks();
-	//}
+	}
 }
