@@ -10,9 +10,10 @@ class Maailma;
 
 class Vihollinen{
 private:
-	int width, height;
+	int width, height, turnDirection;
 	float x, y, dy, dx, centerX, centerY, targetX, targetY, suunta;
 	void calculateTarget();
+	void calculateTurnDirection();
 	Pelihahmo* pelihahmo;
 	Maailma *maailma;
 	void setXVelocity(float vx);

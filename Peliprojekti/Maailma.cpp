@@ -39,7 +39,8 @@ void Maailma::createStartingEnemys(){
 	for(int i=0; i<1; i++){
 		float x = rand()%500 + 1;
 		float y = rand()%500 + 1;
-		float suunta = rand()%8*45;
+		//float suunta = M_PI/(rand()%8-4);
+		float suunta = 0;
 
 		//printf("%d",i);
 		if(!viholliset.empty()){
