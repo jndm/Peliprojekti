@@ -45,7 +45,7 @@ bool Pelimoottori::init()
 		else
 		{
 			//Create renderer for window
-			gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC );
+			gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_SOFTWARE /*SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC*/ );
 			if( gRenderer == NULL )
 			{
 				printf( "Renderer could not be created! SDL Error: %s\n", SDL_GetError() );
@@ -141,6 +141,13 @@ void Pelimoottori::handleEvent(){
 				maailma->getPelihahmo()->setXVelocity(0, 1);					
 			break;
 		}
+	}
+
+	//kaupungin avaus
+	if( e.type == SDLK_k )
+	{
+		kaupunki = new Kaupunki(gRenderer);
+		kaupunki->lataaKuvat;
 	}
 }
 
