@@ -15,8 +15,8 @@ Tykinkuula::Tykinkuula(Pelihahmo* ph, Tekstuurit* text, int _direction, int _dow
 	// y : cy = y + sin omega(=360-arctan(leveys/korkeus)-suunta)*y*/
 
 	if(downOrUp == -1){
-		x = pelihahmo->getX()+(pelihahmo->getWidth()/2)-sade/2;
-		y = pelihahmo->getY()+(pelihahmo->getHeight()/2)-sade/2;
+		x = pelihahmo->getX()+(pelihahmo->getWidth()/2*cos(direction*M_PI/180));
+		y = pelihahmo->getY()+(pelihahmo->getHeight()/2*sin(direction*M_PI/180));
 	}
 	else{
 		x = pelihahmo->getX()+(pelihahmo->getWidth()/2)-sade/2;
@@ -36,11 +36,11 @@ Tykinkuula::Tykinkuula(Pelihahmo* ph, Tekstuurit* text, int _direction, int _dow
 
 void Tykinkuula::move(float fts){
 	if(downOrUp == -1){
-		x-=200*fts*cos((90+direction)*M_PI/180);
-		y-=200*fts*sin((90+direction)*M_PI/180);		
+		x-=(200*cos((90+direction)*M_PI/180)-pelihahmo->getXvelocity()*cos(direction*M_PI/180))*fts;
+		y-=(200*sin((90+direction)*M_PI/180)-pelihahmo->getYvelocity()*sin(direction*M_PI/180))*fts;		
 	}else if(downOrUp == 1){
-		x+=200*fts*cos((90+direction)*M_PI/180);
-		y+=200*fts*sin((90+direction)*M_PI/180);
+		x+=(200*cos((90+direction)*M_PI/180)+pelihahmo->getXvelocity()*cos(direction*M_PI/180))*fts;
+		y+=(200*sin((90+direction)*M_PI/180)+pelihahmo->getYvelocity()*sin(direction*M_PI/180))*fts;
 	}
 }
 
