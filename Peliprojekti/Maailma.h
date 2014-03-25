@@ -23,6 +23,7 @@ public:
 	void render();
 	void move(float timestep);
 	void setTaustaTexture(Tekstuurit taustaText);
+	void setExplosionTexture(Tekstuurit explosionText);
 	Pelihahmo* getPelihahmo();
 	void createStartingEnemys();
 	void setEnemyTexture(Tekstuurit enemyText);
@@ -39,9 +40,13 @@ private:
 	Kamera camera;
 	Tekstuurit tausta;
 	Tekstuurit enemyTexture;
+	Tekstuurit explosionTexture;
+	SDL_Rect gSpriteClips[FRAMES_IN_SPRITESHEET];
 	GUI* gui;
 	Vihollinen* vihollinen;
 	vector<Vihollinen*> viholliset;
+	int explosionFrame;
+	void renderExplosion(float x, float y);
 
 };
 #endif

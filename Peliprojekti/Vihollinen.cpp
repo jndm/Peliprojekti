@@ -49,5 +49,14 @@ void Vihollinen::setYVelocity(float vy, int direction){
 }
 
 bool Vihollinen::checkIfCannonballHit(Tykinkuula* tk){
-	return false;
+	bool hit = true;
+
+	printf("x: %f y: %f cX: %f cY: %f\n",x,y,tk->getX(),tk->getY());
+
+	if(x+3 > tk->getX()+tk->getSade()-10){ hit = false; }
+	else if( x + width -3 < tk->getX()){ hit = false; }
+	else if( y > tk->getY()+tk->getSade()-10){ hit = false; }
+    else if( y + height -3 < tk->getY()){ hit = false; }
+
+	return hit;
 }

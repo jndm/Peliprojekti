@@ -59,6 +59,7 @@ int Pelihahmo::kaannossuunta(){//int s>0 oikealle, s=0 suoraan, s<0 vasemmalle
 	int deltax=locxmap-(x+width/2);
 	int deltay=locymap-(y+height/2);
 	float angleInDegrees = atan2(deltay, deltax) * 180 / M_PI;
+
 	//printf("%f\n",angleInDegrees);
 	if(angleInDegrees - suunta < 1 && angleInDegrees - suunta > -1){
 		return 0;
@@ -135,15 +136,19 @@ int Pelihahmo::kaannossuunta(){//int s>0 oikealle, s=0 suoraan, s<0 vasemmalle
 		}
 	}
 	/*
-	float kulma = atan2(locymap - (y+height/2), locxmap - (x+width/2))*180/M_PI - suunta;
-	if(kulma < -1) {
-	return -1;
-	} else if(kulma>1){
+	float kulma = atan2(deltax, deltay);
+	kulma = (kulma + M_PI) - (suunta*M_PI/180 + M_PI);
+	if(fabs(kulma) > M_PI) {
+	kulma = kulma - merkki(kulma)*2*M_PI;
+	}
+	if(kulma < -M_PI/180) {
 	return 1;
-	}else
+	} else if(kulma > M_PI/180) {
+	return -1;
+	} else {
 	return 0;
-	printf("kulma: %f\n", kulma*180/M_PI);
-	*/
+	}*/
+
 }
 
 float Pelihahmo::getX(){
@@ -201,4 +206,9 @@ void Pelihahmo::ammu(int tykki){
 		cannonballs.push_back(new Tykinkuula(this, &cannonballText, suunta, tykki, kaannossuunta()));
 		lastShootTime = SDL_GetTicks();
 	}
+}
+
+int Pelihahmo::merkki(float f) {
+	if (f > 0) return 1;
+	return (f == 0) ? 0 : -1;
 }

@@ -14,13 +14,14 @@ public:
 	void move(float fts);
 	void render(int camx, int camy);
 	bool ifRdyToBeDestroyed();
+	float getX(){ return x; }
+	float getY(){ return y; }
+	int getSade(){ return sade; }
 
 private:
 	Tekstuurit* tykinkuulaText;
 	float nopeus, x, y;
 	int sade;
-	float getX(){ return x; }
-	float getY(){ return y; }
 	bool rdyToBeDestroyed;
 	int frame;
 	SDL_Rect gSpriteClips[FRAMES_IN_SPRITESHEET];

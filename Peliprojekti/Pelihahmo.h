@@ -18,6 +18,7 @@ private:
 	int camY;
 	Uint32 lastShootTime, shootingDelay;
 	bool kaantyminen;
+	int merkki(float f);
 
 public:
 	void move(float fts);

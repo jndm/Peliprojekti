@@ -41,9 +41,15 @@ void Maailma::move(float timestep){
 }
 
 void Maailma::checkCollisions(){
+	int i=0;
 	for(std::vector<Vihollinen*>::iterator itv = viholliset.begin(); itv != viholliset.end(); ++itv){
-		for(std::vector<Tykinkuula*>::iterator itt = pelihahmo->getCannonballs()->begin(); itt != pelihahmo->getCannonballs()->end(); ++itt) {
-			(*itv)->checkIfCannonballHit((*itt));
+		for(std::vector<Tykinkuula*>::iterator itt = pelihahmo->getCannonballs()->begin(); itt != pelihahmo->getCannonballs()->end(); ++i) {
+			printf("%d",(*itv)->checkIfCannonballHit((*itt)));
+			if((*itv)->checkIfCannonballHit((*itt))){
+				renderExplosion((*itt)->getX(), (*itt)->getY());
+				itt = pelihahmo->getCannonballs()->erase(itt);
+			}
+			else itt++;
 		}
 	}
 }
@@ -55,7 +61,7 @@ Pelihahmo* Maailma::getPelihahmo(){
 void Maailma::createStartingEnemys(){
 	srand(time(0));
 	//viholliset.push_back(new Vihollinen((rand()%LEVEL_WIDTH + 1), (rand()%LEVEL_HEIGHT + 1), enemyTexture));
-	for(int i=0; i<9; i++){
+	for(int i=0; i<1; i++){
 		int x = rand()%500 + 1;
 		int y = rand()%500 + 1;
 
@@ -65,9 +71,9 @@ void Maailma::createStartingEnemys(){
 				if(x+viholliset[j]->getWidth() > viholliset[j]->getX() && x < viholliset[j]->getX()+viholliset[j]->getWidth()    
 					&&  y+viholliset[j]->getHeight() > viholliset[j]->getY() && y < viholliset[j]->getY()+viholliset[j]->getHeight())
 				{
-				x = rand()%500 + 1;
-				y = rand()%500 + 1;
-				j=0;
+					x = rand()%500 + 1;
+					y = rand()%500 + 1;
+					j=0;
 				}
 			}
 		}
@@ -81,4 +87,23 @@ void Maailma::setEnemyTexture(Tekstuurit enemyText) {
 
 void Maailma::setTaustaTexture(Tekstuurit taustaText) {
 	tausta = taustaText;
+}
+
+void Maailma::setExplosionTexture(Tekstuurit enemyText){
+	explosionTexture = enemyText;
+	for(int i=0; i<FRAMES_IN_SPRITESHEET; ++i){
+		gSpriteClips[i].x = i*30;
+		gSpriteClips[i].y = 0;
+		gSpriteClips[i].w = 30;
+		gSpriteClips[i].h = 30;
+	}
+	explosionFrame = 0;
+}
+
+void Maailma::renderExplosion(float x, float y){
+	while( explosionFrame / 15 >= FRAMES_IN_SPRITESHEET ){
+		explosionTexture.render( x - camera.getCameraX(), y - camera.getCameraY() , &gSpriteClips[explosionFrame/15]);
+		explosionFrame++;	
+	}
+	explosionFrame = 0;
 }

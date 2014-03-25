@@ -25,6 +25,7 @@ private:
 	Tekstuurit ssButton;
 	Tekstuurit enemyText;
 	Tekstuurit cannonballText;
+	Tekstuurit explosionText;
 	Maailma* maailma;
 	GUI* gui;
 };
