@@ -99,6 +99,8 @@ void Pelimoottori::handleEvent(){
 			sliderinLiikutus = true;
 		} else {
 			maailma->getPelihahmo()->setKohde(x,y);
+			maailma->getPelihahmo()->setKaantyminen(true);
+			kaantyminen = true;
 		}
 	}else if( e.type == SDL_MOUSEBUTTONUP && sliderinLiikutus){
 		sliderinLiikutus = false;
@@ -108,6 +110,13 @@ void Pelimoottori::handleEvent(){
 		gui->moveSpeedBarButton(y);
 		maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
 		maailma->getPelihahmo()->setYVelocity((480-y)/2, 1);
+	}else if( e.type == SDL_MOUSEBUTTONUP && kaantyminen){
+		kaantyminen = false;
+		maailma->getPelihahmo()->setKaantyminen(false);
+	}else if( e.type == SDL_MOUSEMOTION && kaantyminen){
+		int x, y;
+        SDL_GetMouseState( &x, &y );
+		maailma->getPelihahmo()->setKohde(x,y);
 	}
 	if( e.type == SDL_KEYDOWN){
 		//Mitä painettiin?

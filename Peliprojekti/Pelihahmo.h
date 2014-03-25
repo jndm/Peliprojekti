@@ -26,6 +26,8 @@ public:
 	float getY();
 	int getWidth();
 	int getHeight();
+	bool kaantyminen;
+	void setKaantyminen(bool kaantyminen);
 	void setXVelocity(float vx, int direction);
 	void setYVelocity(float vy, int direction);
 	int kaannossuunta();
