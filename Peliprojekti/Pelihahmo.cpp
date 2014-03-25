@@ -12,6 +12,7 @@ Pelihahmo::Pelihahmo(){
 	suunta=0;
 	locxmap=x;
 	locymap=y;
+	kaantyminen=false;
 }
 
 Pelihahmo::~Pelihahmo(void){
@@ -20,7 +21,7 @@ Pelihahmo::~Pelihahmo(void){
 
 
 void Pelihahmo::move(float fts){
-	if(x!=locxmap&&y!=locymap){
+	if(kaantyminen){
 		int s=kaannossuunta();
 		if(s>0){
 			//tee oikealle liikkuminen
@@ -37,10 +38,11 @@ void Pelihahmo::move(float fts){
 			if(suunta<-180)
 				suunta=suunta+360;
 		}
+	}
 	printf("%f\n",suunta);
 	x+=dx*fts*(std::cos(suunta*M_PI/180));
 	y+=dy*fts*(std::sin(suunta*M_PI/180));
-	}
+	
 	//float suuntax=cos(suunta);
 	//float suuntay=sin(suunta);
 	//float position = ( (Bx-Ax)*(Y-Ay) - (By-Ay)*(X-Ax) );
@@ -155,6 +157,10 @@ void Pelihahmo::render(int _camX, int _camY )
     //Näytä neliö kameran suhteen
 	pelihahmoText.render( (int)(x - kamerax), (int)(y - kameray) , NULL, suunta);
 
+}
+
+void Pelihahmo::setKaantyminen(bool _kaantyminen){
+	kaantyminen = _kaantyminen;
 }
 
 //Tälle jotain fiksumpaa ratkaisua?

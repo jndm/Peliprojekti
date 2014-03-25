@@ -67,6 +67,7 @@ private:
 public:
 	Pelimoottori(void);
 	~Pelimoottori(void);
+	bool kaantyminen;
 	int start();
 	int getSCREENWIDTH(){return SCREEN_WIDTH;}
 	int getSCREENHEIGHT(){return SCREEN_HEIGHT;}
