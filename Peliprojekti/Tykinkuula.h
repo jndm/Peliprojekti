@@ -10,7 +10,7 @@ class Pelihahmo;
 
 class Tykinkuula{
 public:
-	Tykinkuula(Pelihahmo* ph, Tekstuurit* text, int _direction, int downOrUp);
+	Tykinkuula(Pelihahmo* ph, Tekstuurit* text, int _direction, int downOrUp, int _kaannossuunta);
 	void move(float fts);
 	void render(int camx, int camy);
 	bool ifRdyToBeDestroyed();
@@ -28,5 +28,6 @@ private:
 	Pelihahmo *pelihahmo;
 	int suuntaX, suuntaY;
 	int downOrUp;
+	int kaannossuunta;
 };
 #endif

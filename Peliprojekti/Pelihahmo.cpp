@@ -37,7 +37,7 @@ void Pelihahmo::move(float fts){
 			if(suunta<-180)
 				suunta=suunta+360;
 		}
-	printf("%f\n",suunta);
+	//printf("%f\n",suunta);
 	x+=dx*fts*(std::cos(suunta*M_PI/180));
 	y+=dy*fts*(std::sin(suunta*M_PI/180));
 	}
@@ -124,7 +124,6 @@ int Pelihahmo::kaannossuunta(){//int s>0 oikealle, s=0 suoraan, s<0 vasemmalle
 		return -1;
 	}
 
-
 	else{
 		//printf("suoraan\n");
 		//kulje suoraa
@@ -180,7 +179,7 @@ void Pelihahmo::setYVelocity(float vy, int direction){
 void Pelihahmo::ammu(int tykki){
 
 	if(SDL_GetTicks() > lastShootTime + shootingDelay){
-		cannonballs.push_back(new Tykinkuula(this, &cannonballText, suunta, tykki));
+		cannonballs.push_back(new Tykinkuula(this, &cannonballText, suunta, tykki, kaannossuunta()));
 		lastShootTime = SDL_GetTicks();
 	}
 }
