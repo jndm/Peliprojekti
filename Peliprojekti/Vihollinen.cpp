@@ -28,7 +28,12 @@ void Vihollinen::move(float fts) {
 	calculateTarget();
 	//suunta = atan2(targetY - centerY, targetX - centerX);			// suunta radiaaneissa, jossa pelaaja on
 	suunta += turnDirection * M_PI/180;
-	calculateTurnDirection();
+	if(suunta < -M_PI) {
+		suunta = 2 * M_PI + suunta;
+	}
+	suunta = fmod(suunta + M_PI, 2 * M_PI) - M_PI;
+	//printf("suunta: %f\n", suunta*180/M_PI);
+	turnDirection = calculateTurnDirection();
 	//printf("%f\n",suunta * 180/M_PI);
 	dx = 150*cos(suunta);
 	dy = 150*sin(suunta);
@@ -43,7 +48,7 @@ void Vihollinen::calculateTarget() {
 	float pelaajaX = pelihahmo->getX() + pelihahmo->getWidth()/2;
 	float pelaajaY = pelihahmo->getY() + pelihahmo->getHeight()/2;
 	float angle = atan2(pelaajaY - centerY, pelaajaX - centerX);			// suunta radiaaneissa, jossa pelaaja on
-	float etaisyys = sqrt(pow(pelaajaX - centerX, 2) + pow(pelaajaY - centerY, 2));
+	float etaisyys2 = pow(pelaajaX - centerX, 2) + pow(pelaajaY - centerY, 2);
 	//(a, b) = pelaajan koordinantit
 	//(c, d) = omat koordinantit
 	//sin f = ampumisetäisyys / etäisyyspelaajasta
@@ -51,6 +56,7 @@ void Vihollinen::calculateTarget() {
 	//x^2 - 2ax + a^2 + y^2 - 2by + b^2 - (tan f)^2 * ((x - c)^2 + (y - d)^2) = 0
 	float pisteetX[2];
 	float pisteetY[2];
+
 	if(angle < 0) {
 		pisteetX[0] = pelaajaX + cos((M_PI + angle) - M_PI/4.) * AMPUMISETAISYYS;
 		pisteetY[0] = pelaajaY + sin((M_PI + angle) - M_PI/4.) * AMPUMISETAISYYS;
@@ -62,13 +68,14 @@ void Vihollinen::calculateTarget() {
 		pisteetX[1] = pelaajaX + cos((angle - M_PI) + M_PI/4.) * AMPUMISETAISYYS;
 		pisteetY[1] = pelaajaY + sin((angle - M_PI) + M_PI/4.) * AMPUMISETAISYYS;
 	}
-	float kulma0 = abs(atan2(pisteetY[0] - centerY, pisteetX[0] - centerX) - suunta);
-	float kulma1 = abs(atan2(pisteetY[1] - centerY, pisteetX[1] - centerX) - suunta);
+	float kulma0 = fabs(atan2(pisteetY[0] - centerY, pisteetX[0] - centerX) - suunta);
+	float kulma1 = fabs(atan2(pisteetY[1] - centerY, pisteetX[1] - centerX) - suunta);
+	//printf("kulma0: %f, kulma1: %f\n", kulma0*180/M_PI, kulma1*180/M_PI);
 	if(kulma0 >= M_PI) {
-		kulma0 = 360 - kulma0;
+		kulma0 = 2*M_PI - kulma0;
 	}
 	if(kulma1 >= M_PI) {
-		kulma1 = 360 - kulma1;
+		kulma1 = 2*M_PI - kulma1;
 	}
 	if(kulma0 < kulma1) {
 		targetX = pisteetX[0];
@@ -83,14 +90,19 @@ void Vihollinen::calculateTarget() {
 	//dy = 150*sin(atan2(targetY - centerY, targetX - centerX));
 }
 
-void Vihollinen::calculateTurnDirection() {
-	float kulma = atan2(targetY - centerY, targetX - centerX) - suunta;
-	if(kulma<0) {
-		turnDirection = -1;
-	} else {
-		turnDirection = 1;
+int Vihollinen::calculateTurnDirection() {
+	float kulma = atan2(targetY - centerY, targetX - centerX);
+	kulma = (kulma + M_PI) - (suunta + M_PI);
+	if(fabs(kulma) > M_PI) {
+		kulma = kulma - merkki(kulma)*2*M_PI;
 	}
-	printf("kulma: %f\n", kulma*180/M_PI);
+	if(kulma < -M_PI/180) {
+		return -1;
+	} else if(kulma > M_PI/180) {
+		return 1;
+	} else {
+		return 0;
+	}
 }
 
 float Vihollinen::getX() {
@@ -122,6 +134,10 @@ void Vihollinen::setYVelocity(float vy) {
 	dy = vy;
 }
 
+int Vihollinen::merkki(float f) {
+    if (f > 0) return 1;
+    return (f == 0) ? 0 : -1;
+}
 unsigned int quadraticSolver(double * ce,  double * roots) {
 	//quadratic solver for
 	// x^2 + ce[0] x + ce[2] =0

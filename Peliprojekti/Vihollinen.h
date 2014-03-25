@@ -13,7 +13,8 @@ private:
 	int width, height, turnDirection;
 	float x, y, dy, dx, centerX, centerY, targetX, targetY, suunta;
 	void calculateTarget();
-	void calculateTurnDirection();
+	int calculateTurnDirection();
+	int merkki(float f);
 	Pelihahmo* pelihahmo;
 	Maailma *maailma;
 	void setXVelocity(float vx);
