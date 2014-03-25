@@ -11,14 +11,13 @@ class Maailma;
 class Vihollinen{
 private:
 	int width, height, turnDirection;
-	float x, y, dy, dx, centerX, centerY, targetX, targetY, suunta;
-	void calculateTarget();
+	float x, y, dy, dx, centerX, centerY, velocity, targetX, targetY, suunta;
+	void calculateTarget(float pelaajaX, float pelaajaY);
 	int calculateTurnDirection();
 	int merkki(float f);
 	Pelihahmo* pelihahmo;
 	Maailma *maailma;
-	void setXVelocity(float vx);
-	void setYVelocity(float vy);
+	void setVelocity(float v);
 
 public:
 	void move(float fts);

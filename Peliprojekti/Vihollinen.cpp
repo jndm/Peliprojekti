@@ -16,6 +16,7 @@ Vihollinen::Vihollinen(float xp, float yp, float _suunta, Pelihahmo* _pelihahmo,
 	height = 50;
 	centerX = x + width/2;
 	centerY = y + height/2;
+	velocity = 0.f;
 	//vihollinenText = text;
 	maailma = _maailma;
 	pelihahmo = _pelihahmo;
@@ -25,18 +26,32 @@ Vihollinen::Vihollinen(float xp, float yp, float _suunta, Pelihahmo* _pelihahmo,
 }
 
 void Vihollinen::move(float fts) {
-	calculateTarget();
-	//suunta = atan2(targetY - centerY, targetX - centerX);			// suunta radiaaneissa, jossa pelaaja on
+	float pelaajaX = pelihahmo->getX() + pelihahmo->getWidth()/2;
+	float pelaajaY = pelihahmo->getY() + pelihahmo->getHeight()/2;
+	float etaisyys2 = pow(pelaajaX - centerX, 2) + pow(pelaajaY - centerY, 2);
+	if (etaisyys2 < 90000) {
+		calculateTarget(pelaajaX, pelaajaY);
+		velocity += 2;
+		if( velocity > 150) {
+			velocity = 150;
+		}
+	} else {
+		velocity -= 2;
+		if( velocity < 0) {
+			velocity = 0;
+		}
+	}
+
+	turnDirection = calculateTurnDirection();
+
 	suunta += turnDirection * M_PI/180;
 	if(suunta < -M_PI) {
 		suunta = 2 * M_PI + suunta;
 	}
 	suunta = fmod(suunta + M_PI, 2 * M_PI) - M_PI;
-	//printf("suunta: %f\n", suunta*180/M_PI);
-	turnDirection = calculateTurnDirection();
-	//printf("%f\n",suunta * 180/M_PI);
-	dx = 150*cos(suunta);
-	dy = 150*sin(suunta);
+
+	dx = velocity*cos(suunta);
+	dy = velocity*sin(suunta);
 	x+=dx*fts;
 	y+=dy*fts;
 	centerX = x + width/2;
@@ -44,11 +59,8 @@ void Vihollinen::move(float fts) {
 	//printf("x: %f y: %f liikeX: %f liikeY: %f\n",x,y,dx,dy);
 }
 
-void Vihollinen::calculateTarget() {
-	float pelaajaX = pelihahmo->getX() + pelihahmo->getWidth()/2;
-	float pelaajaY = pelihahmo->getY() + pelihahmo->getHeight()/2;
+void Vihollinen::calculateTarget(float pelaajaX, float pelaajaY) {
 	float angle = atan2(pelaajaY - centerY, pelaajaX - centerX);			// suunta radiaaneissa, jossa pelaaja on
-	float etaisyys2 = pow(pelaajaX - centerX, 2) + pow(pelaajaY - centerY, 2);
 	//(a, b) = pelaajan koordinantit
 	//(c, d) = omat koordinantit
 	//sin f = ampumisetäisyys / etäisyyspelaajasta
@@ -126,18 +138,15 @@ void Vihollinen::render(int cx, int cy) {
 	maailma->getTargetTexture()->render( targetX - cx, targetY - cy);
 }
 
-void Vihollinen::setXVelocity(float vx) {
-	dx = vx;
-}
-
-void Vihollinen::setYVelocity(float vy) {
-	dy = vy;
+void Vihollinen::setVelocity(float v) {
+	velocity = v;
 }
 
 int Vihollinen::merkki(float f) {
     if (f > 0) return 1;
     return (f == 0) ? 0 : -1;
 }
+
 unsigned int quadraticSolver(double * ce,  double * roots) {
 	//quadratic solver for
 	// x^2 + ce[0] x + ce[2] =0

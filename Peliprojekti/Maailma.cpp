@@ -36,7 +36,7 @@ Pelihahmo* Maailma::getPelihahmo(){
 void Maailma::createStartingEnemys(){
 	srand(time(0));
 	//viholliset.push_back(new Vihollinen((rand()%LEVEL_WIDTH + 1), (rand()%LEVEL_HEIGHT + 1), enemyTexture));
-	for(int i=0; i<1; i++){
+	for(int i=0; i<3; i++){
 		float x = rand()%500 + 1;
 		float y = rand()%500 + 1;
 		//float suunta = M_PI/(rand()%8-4);
