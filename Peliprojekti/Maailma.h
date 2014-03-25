@@ -28,6 +28,7 @@ public:
 	void setEnemyTexture(Tekstuurit enemyText);
 	int getKameraloc();
 	Kamera getCamera(){ return camera; }
+	void checkCollisions();
 
 private:
 	int SCREEN_WIDTH;

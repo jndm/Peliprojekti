@@ -40,6 +40,14 @@ void Maailma::move(float timestep){
 	}
 }
 
+void Maailma::checkCollisions(){
+	for(std::vector<Vihollinen*>::iterator itv = viholliset.begin(); itv != viholliset.end(); ++itv){
+		for(std::vector<Tykinkuula*>::iterator itt = pelihahmo->getCannonballs()->begin(); itt != pelihahmo->getCannonballs()->end(); ++itt) {
+			(*itv)->checkIfCannonballHit((*itt));
+		}
+	}
+}
+
 Pelihahmo* Maailma::getPelihahmo(){
 	return pelihahmo;
 }

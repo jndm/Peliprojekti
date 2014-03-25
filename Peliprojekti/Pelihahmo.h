@@ -17,6 +17,7 @@ private:
 	int camX;
 	int camY;
 	Uint32 lastShootTime, shootingDelay;
+	bool kaantyminen;
 
 public:
 	void move(float fts);
@@ -26,7 +27,6 @@ public:
 	float getY();
 	int getWidth();
 	int getHeight();
-	bool kaantyminen;
 	void setKaantyminen(bool kaantyminen);
 	void setXVelocity(float vx, int direction);
 	void setYVelocity(float vy, int direction);

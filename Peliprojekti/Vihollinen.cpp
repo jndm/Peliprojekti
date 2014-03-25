@@ -47,3 +47,7 @@ void Vihollinen::setXVelocity(float vx, int direction){
 void Vihollinen::setYVelocity(float vy, int direction){
 	dy = vy*direction;
 }
+
+bool Vihollinen::checkIfCannonballHit(Tykinkuula* tk){
+	return false;
+}

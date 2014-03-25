@@ -193,6 +193,7 @@ void Pelimoottori::mainLoop(){
 			}
 			maailma->render();
 			maailma->move(FRAMETIMESTEP);
+			maailma->checkCollisions();
 			//Päivitä ruutu
 			SDL_RenderPresent( gRenderer );
 		}

@@ -2,7 +2,7 @@
 #define VIHOLLINEN_H
 
 #include "Tekstuurit.h"
-
+#include "Tykinkuula.h"
 class Vihollinen{
 private:
 	int width, height;
@@ -20,6 +20,7 @@ public:
 
 	void render(int cx, int cy);
 	Tekstuurit* vihollinenText;
+	bool checkIfCannonballHit(Tykinkuula* tk);
 };
 
 #endif
