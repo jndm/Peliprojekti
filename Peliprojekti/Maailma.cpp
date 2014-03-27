@@ -44,9 +44,9 @@ void Maailma::checkCollisions(){
 	int i=0;
 	for(std::vector<Vihollinen*>::iterator itv = viholliset.begin(); itv != viholliset.end(); ++itv){
 		for(std::vector<Tykinkuula*>::iterator itt = pelihahmo->getCannonballs()->begin(); itt != pelihahmo->getCannonballs()->end(); ++i) {
-			printf("%d",(*itv)->checkIfCannonballHit((*itt)));
 			if((*itv)->checkIfCannonballHit((*itt))){
-				renderExplosion((*itt)->getX(), (*itt)->getY());
+				std::thread t(&Maailma::renderExplosion, this, (*itt)->getX(), (*itt)->getY());
+				t.detach();
 				itt = pelihahmo->getCannonballs()->erase(itt);
 			}
 			else itt++;
@@ -101,9 +101,15 @@ void Maailma::setExplosionTexture(Tekstuurit enemyText){
 }
 
 void Maailma::renderExplosion(float x, float y){
-	while( explosionFrame / 15 >= FRAMES_IN_SPRITESHEET ){
-		explosionTexture.render( x - camera.getCameraX(), y - camera.getCameraY() , &gSpriteClips[explosionFrame/15]);
-		explosionFrame++;	
+	long animationDelay = 300;
+	long time = 0;
+	while( explosionFrame < FRAMES_IN_SPRITESHEET ){
+		if(SDL_GetTicks() > time + animationDelay){
+			explosionTexture.render( x - camera.getCameraX(), y - camera.getCameraY() , &gSpriteClips[explosionFrame]);	
+			printf("Piirretaan rajahdysta pisteeseen x: %d, y: %d frame: %d\n", (int)(x - camera.getCameraX()), (int)(y - camera.getCameraY()), (int)(explosionFrame));
+			explosionFrame++;
+			time = SDL_GetTicks();
+		}
 	}
 	explosionFrame = 0;
 }

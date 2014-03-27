@@ -10,6 +10,7 @@
 #include "Vihollinen.h"
 #include <vector>
 #include <time.h>
+#include <thread>
 #include "Tykinkuula.h"
 
 using namespace std;
