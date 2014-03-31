@@ -23,6 +23,13 @@ void Maailma::render(){
 	for(std::vector<Tykinkuula*>::iterator it = pelihahmo->getCannonballs()->begin(); it != pelihahmo->getCannonballs()->end(); ++it) {
 		(*it)->render(camera.getCameraX(), camera.getCameraY());
 	}
+	int i=0;
+	for(std::vector<Rajahdys>::iterator it = rajahdykset.begin(); it != rajahdykset.end(); ++i) {
+		if(renderExplosion(*it)){       //Renderöidään räjähdykset ja poistetaan ne kun renderöinti on valmis
+			it = rajahdykset.erase(it);
+		}
+		else it++;
+	}
 	gui->render(camera.getCameraX(), camera.getCameraY());
 }
 
@@ -41,12 +48,15 @@ void Maailma::move(float timestep){
 }
 
 void Maailma::checkCollisions(){
+	//Tarkistetaan tykinkuulan törmäys, merkitään törmäyspaikka animaatiota varten talteen ja poistetaan tykinkuula
 	int i=0;
 	for(std::vector<Vihollinen*>::iterator itv = viholliset.begin(); itv != viholliset.end(); ++itv){
 		for(std::vector<Tykinkuula*>::iterator itt = pelihahmo->getCannonballs()->begin(); itt != pelihahmo->getCannonballs()->end(); ++i) {
 			if((*itv)->checkIfCannonballHit((*itt))){
-				std::thread t(&Maailma::renderExplosion, this, (*itt)->getX(), (*itt)->getY());
-				t.detach();
+				rajahdys.x = (*itt)->getX();
+				rajahdys.y = (*itt)->getY();
+				rajahdys.valmis = false;
+				rajahdykset.push_back(rajahdys);
 				itt = pelihahmo->getCannonballs()->erase(itt);
 			}
 			else itt++;
@@ -100,16 +110,12 @@ void Maailma::setExplosionTexture(Tekstuurit enemyText){
 	explosionFrame = 0;
 }
 
-void Maailma::renderExplosion(float x, float y){
-	long animationDelay = 300;
-	long time = 0;
-	while( explosionFrame < FRAMES_IN_SPRITESHEET ){
-		if(SDL_GetTicks() > time + animationDelay){
-			explosionTexture.render( x - camera.getCameraX(), y - camera.getCameraY() , &gSpriteClips[explosionFrame]);	
-			printf("Piirretaan rajahdysta pisteeseen x: %d, y: %d frame: %d\n", (int)(x - camera.getCameraX()), (int)(y - camera.getCameraY()), (int)(explosionFrame));
-			explosionFrame++;
-			time = SDL_GetTicks();
-		}
-	}
-	explosionFrame = 0;
+bool Maailma::renderExplosion(Rajahdys r){
+	explosionTexture.render(r.x - camera.getCameraX(), r.y - camera.getCameraY(),&gSpriteClips[explosionFrame/6]);
+	explosionFrame++;
+	if( explosionFrame / 6 >= FRAMES_IN_SPRITESHEET ){
+		explosionFrame=0;
+		return true;
+	}else
+		return false;
 }

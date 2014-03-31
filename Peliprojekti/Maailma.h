@@ -17,6 +17,12 @@ using namespace std;
 
 class Pelimoottori;
 
+struct Rajahdys{
+	int x;
+	int y;
+	bool valmis;
+};
+
 class Maailma{
 public:
 	Maailma(Pelimoottori* pelimoottori);
@@ -47,7 +53,8 @@ private:
 	Vihollinen* vihollinen;
 	vector<Vihollinen*> viholliset;
 	int explosionFrame;
-	void renderExplosion(float x, float y);
-
+	bool renderExplosion(Rajahdys r);
+	vector<Rajahdys> rajahdykset;
+	Rajahdys rajahdys;
 };
 #endif
