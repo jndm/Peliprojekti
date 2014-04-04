@@ -26,6 +26,7 @@ private:
 	Tekstuurit enemyText;
 	Tekstuurit cannonballText;
 	Tekstuurit explosionText;
+	Tekstuurit enemyHealthBarText;
 	Maailma* maailma;
 	GUI* gui;
 };

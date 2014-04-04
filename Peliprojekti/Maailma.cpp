@@ -50,17 +50,22 @@ void Maailma::move(float timestep){
 void Maailma::checkCollisions(){
 	//Tarkistetaan tykinkuulan törmäys, merkitään törmäyspaikka animaatiota varten talteen ja poistetaan tykinkuula
 	int i=0;
-	for(std::vector<Vihollinen*>::iterator itv = viholliset.begin(); itv != viholliset.end(); ++itv){
+	for(std::vector<Vihollinen*>::iterator itv = viholliset.begin(); itv != viholliset.end(); ++i){
 		for(std::vector<Tykinkuula*>::iterator itt = pelihahmo->getCannonballs()->begin(); itt != pelihahmo->getCannonballs()->end(); ++i) {
 			if((*itv)->checkIfCannonballHit((*itt))){
 				rajahdys.x = (*itt)->getX();
 				rajahdys.y = (*itt)->getY();
 				rajahdys.valmis = false;
 				rajahdykset.push_back(rajahdys);
+				(*itv)->lowerHp(1);
 				itt = pelihahmo->getCannonballs()->erase(itt);
 			}
 			else itt++;
 		}
+		if((*itv)->getHp() == 0){
+			itv = viholliset.erase(itv);
+		}
+		else itv++;
 	}
 }
 
@@ -87,12 +92,16 @@ void Maailma::createStartingEnemys(){
 				}
 			}
 		}
-		viholliset.push_back(new Vihollinen(x, y, &enemyTexture));
+		viholliset.push_back(new Vihollinen(x, y, &enemyTexture, &enemyHpBarText));
 	}
 }
 
 void Maailma::setEnemyTexture(Tekstuurit enemyText) {
 	enemyTexture = enemyText;
+}
+
+void Maailma::setEnemyHealthBarTexture(Tekstuurit enemyHBText){
+	enemyHpBarText = enemyHBText;
 }
 
 void Maailma::setTaustaTexture(Tekstuurit taustaText) {

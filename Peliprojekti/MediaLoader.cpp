@@ -29,7 +29,7 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 	else{
 		maailma->setTaustaTexture(taustaText);
 	}
-	//Load enemy
+	//Lataa vihollinen
 	if( !enemyText.loadFromFile( "Images/Characters/Vihollinen.png", gRenderer ) )
 	{
 		printf( "Failed to load enemy texture!\n" );
@@ -37,6 +37,16 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 	}
 	else{
 		maailma->setEnemyTexture(enemyText);
+	}
+
+	//Lataa enemyhealthbar
+	if( !enemyHealthBarText.loadFromFile( "Images/Characters/Healthbar.png", gRenderer ) )
+	{
+		printf( "Failed to load enemy texture!\n" );
+		success = false;
+	}
+	else{
+		maailma->setEnemyHealthBarTexture(enemyHealthBarText);
 	}
 
 	//Lataa nopeudens‰‰dinpohja

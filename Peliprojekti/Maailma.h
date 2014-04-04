@@ -34,6 +34,7 @@ public:
 	Pelihahmo* getPelihahmo();
 	void createStartingEnemys();
 	void setEnemyTexture(Tekstuurit enemyText);
+	void setEnemyHealthBarTexture(Tekstuurit enemyHBText);
 	int getKameraloc();
 	Kamera getCamera(){ return camera; }
 	void checkCollisions();
@@ -47,6 +48,7 @@ private:
 	Kamera camera;
 	Tekstuurit tausta;
 	Tekstuurit enemyTexture;
+	Tekstuurit enemyHpBarText;
 	Tekstuurit explosionTexture;
 	SDL_Rect gSpriteClips[FRAMES_IN_SPRITESHEET];
 	GUI* gui;
