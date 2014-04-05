@@ -7,9 +7,11 @@ Pelimoottori::Pelimoottori(void){
 	LEVEL_HEIGHT = 2048;
 	FRAMETIMESTEP = 1.f/60.f;
 	sliderinLiikutus = false;
+	state = MAINMENU;
 	gui = new GUI();
+	mainmenu = new MainMenu(this);
 	maailma = new Maailma(this);
-	mediaLoader = new MediaLoader(maailma, gui);
+	mediaLoader = new MediaLoader(maailma, gui, mainmenu);
 }
 
 Pelimoottori::~Pelimoottori(void){
@@ -77,11 +79,27 @@ void Pelimoottori::close()
 	gWindow = NULL;
 	gRenderer = NULL;
 	delete mediaLoader;
+	delete mainmenu;
 	delete maailma;
 	delete gui;
 	//Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
+}
+
+void Pelimoottori::handleMainMenuEvent(){
+	if( e.type == SDL_QUIT ){
+		quit = true;
+	}else if( e.type == SDL_MOUSEBUTTONDOWN){
+		int x, y;
+        SDL_GetMouseState( &x, &y );
+		if(mainmenu->checkIfHitStart(x, y)){
+			state = GAME;
+			loadGame();
+		}else if(mainmenu->checkIfHitQuit(x, y)){
+			quit = true;
+		}
+	}
 }
 
 void Pelimoottori::handleEvent(){
@@ -167,13 +185,12 @@ int Pelimoottori::start()
 	else
 	{
 		//Load media
-		if( !mediaLoader->loadMedia(gRenderer) )
+		if( !mediaLoader->loadMedia(gRenderer, MAINMENU) )
 		{
 			printf( "Failed to load media!\n" );
 		}
 		else
 		{	
-			maailma->createStartingEnemys();
 			mainLoop();
 		}
 	}
@@ -182,19 +199,40 @@ int Pelimoottori::start()
 	return 0;
 }
 
+int Pelimoottori::loadGame(){
+	if( !mediaLoader->loadMedia(gRenderer, GAME) )
+		{
+			printf( "Failed to load media!\n" );
+		}
+	else
+		{	
+			maailma->createStartingEnemys();
+		}
+	return 0;
+}
+
 void Pelimoottori::mainLoop(){
 	quit = false;
-		while( !quit )
-		{
-			//Tarkkaile näppäimiä
-			while( SDL_PollEvent( &e ) != 0 )
-			{
-				handleEvent();
-			}
-			maailma->render();
-			maailma->move(FRAMETIMESTEP);
-			maailma->checkCollisions();
-			//Päivitä ruutu
-			SDL_RenderPresent( gRenderer );
+		while( !quit ){
+			switch(state){
+				case MAINMENU:
+					while( SDL_PollEvent( &e ) != 0 )
+					{
+						handleMainMenuEvent();
+					}
+					mainmenu->render();
+					break;
+				case GAME:
+					//Tarkkaile näppäimiä
+					while( SDL_PollEvent( &e ) != 0 )
+					{
+						handleEvent();
+					}
+					maailma->render();
+					maailma->move(FRAMETIMESTEP);
+					maailma->checkCollisions();
+				}
+		//Päivitä ruutu
+		SDL_RenderPresent( gRenderer );
 		}
 }
