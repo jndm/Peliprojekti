@@ -120,7 +120,7 @@ void Maailma::setExplosionTexture(Tekstuurit enemyText){
 }
 
 bool Maailma::renderExplosion(Rajahdys r){
-	explosionTexture.render(r.x - camera.getCameraX(), r.y - camera.getCameraY(),&gSpriteClips[explosionFrame/6]);
+	explosionTexture.render(r.x - camera.getCameraX(), r.y - camera.getCameraY(), &gSpriteClips[explosionFrame/6]);
 	explosionFrame++;
 	if( explosionFrame / 6 >= FRAMES_IN_SPRITESHEET ){
 		explosionFrame=0;

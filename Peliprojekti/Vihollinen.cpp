@@ -65,10 +65,10 @@ void Vihollinen::setYVelocity(float vy, int direction){
 bool Vihollinen::checkIfCannonballHit(Tykinkuula* tk){
 	bool hit = true;
 
-	if(x+3 > tk->getX()+tk->getSade()-10){ hit = false; }
-	else if( x + width -3 < tk->getX()){ hit = false; }
-	else if( y > tk->getY()+tk->getSade()-10){ hit = false; }
-    else if( y + height -3 < tk->getY()){ hit = false; }
+	if(x > tk->getX()+tk->getSade()/2){ hit = false; }
+	else if( x + width-tk->getSade()/2 < tk->getX()){ hit = false; }
+	else if( y > tk->getY()+tk->getSade()/2){ hit = false; }
+	else if( y + height - tk->getSade()/2 < tk->getY()){ hit = false; }
 
 	return hit;
 }
