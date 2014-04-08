@@ -39,7 +39,7 @@ void Pelihahmo::move(float fts){
 				suunta=suunta+360;
 		}
 	}
-	//printf("%f\n",suunta);
+	printf("%f\n",fts);
 	x+=dx*fts*(std::cos(suunta*M_PI/180));
 	y+=dy*fts*(std::sin(suunta*M_PI/180));
 
@@ -211,4 +211,42 @@ void Pelihahmo::ammu(int tykki){
 int Pelihahmo::merkki(float f) {
 	if (f > 0) return 1;
 	return (f == 0) ? 0 : -1;
+}
+
+bool Pelihahmo::checkIfVihollinenHit(Vihollinen* vih){
+	int leftP,rightP,topP,bottomP;
+	int leftV,rightV,topV,bottomV;
+
+	leftP=x;
+	rightP=x+width;
+	topP=y;
+	bottomP=y+height;
+
+	leftV=vih->getX();
+	rightV=leftV+vih->getWidth();
+	topV=vih->getY();
+	bottomV=topV+vih->getHeight();
+
+	if( bottomP <= topV ) 
+	{ 
+		return false; 
+	} 
+	if( topP >= bottomV ) 
+	{ 
+		return false; 
+	} 
+	if( rightP <= leftV ) 
+	{ 
+		return false; 
+	} 
+	if( leftP >= rightV ) 
+	{ 
+		return false; 
+	} //If none of the sides from A are outside B 
+	printf("osu");
+	return true; 
+}
+void Pelihahmo::knockBack(){
+	x+=dx*1/60*(std::cos((suunta-180)*M_PI/180));
+	y+=dy*1/60*(std::sin((suunta-180)*M_PI/180));
 }

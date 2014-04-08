@@ -4,6 +4,7 @@
 #include "Tekstuurit.h"
 #include "Tykinkuula.h"
 #include <vector>
+#include "Vihollinen.h"
 
 class Kamera;
 using namespace std;
@@ -40,6 +41,8 @@ public:
 	vector<Tykinkuula*> *getCannonballs(){ return &cannonballs; }
 	float getXvelocity(){ return dx; }
 	float getYvelocity(){ return dy; }
+	bool checkIfVihollinenHit(Vihollinen* vih);
+	void knockBack();
 };
 
 #endif

@@ -62,6 +62,9 @@ void Maailma::checkCollisions(){
 			}
 			else itt++;
 		}
+		if(pelihahmo->checkIfVihollinenHit(*itv)){//true jos osu
+			pelihahmo->knockBack();
+		}
 		if((*itv)->getHp() == 0){
 			itv = viholliset.erase(itv);
 		}
