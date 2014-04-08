@@ -25,10 +25,7 @@ private:
 	Tekstuurit ssbTeksture;
 	Tekstuurit ssButton;
 	Tekstuurit enemyText;
-	Tekstuurit taloAse_kuva;
-	Tekstuurit taloTave_kuva;
-	Tekstuurit taloTela_kuva;
-	Tekstuurit taloRau_kuva;
+	Tekstuurit talo_kuva;
 	Tekstuurit kyla_kuva;
 	Maailma* maailma;
 	GUI* gui;

@@ -16,7 +16,7 @@ public:
 	void avaaRautapaja();
 	void handleEvent();
 	void setTaustaTexture(Tekstuurit tausta);
-	void setAsepajaTexture(Tekstuurit talo);
+	void setTaloTexture(Tekstuurit talo);
 	void setRautapajaTexture(Tekstuurit talo);
 	void setTavernaTexture(Tekstuurit talo);
 	void setTelakkaTexture(Tekstuurit talo);
@@ -26,24 +26,20 @@ private:
 
 	PeliTila* pelitila;
 
-	Tekstuurit taloAse;
-	SDL_Rect taloAse_rect;
-
-	Tekstuurit taloTave;
-	SDL_Rect taloTave_rect;
-
-	Tekstuurit taloTela;
-	SDL_Rect taloTela_rect;
-
-	Tekstuurit taloRau;
-	SDL_Rect taloRau_rect;
+	Tekstuurit talo;
+	SDL_Rect taloClip[8];
 
 	Tekstuurit kyla;
 	SDL_Rect kyla_rect;
-
+	SDL_Rect taloRau_rect;
+	SDL_Rect taloAse_rect;
+	SDL_Rect taloTela_rect;
+	SDL_Rect taloTave_rect;
 
 	SDL_Event kylaEvent;
 
+
+	bool taloRauHoover, taloAseHoover, taloTelaHoover, taloTaveHoover;
 	bool quit;
 };
 #endif

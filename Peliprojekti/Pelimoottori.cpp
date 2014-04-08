@@ -203,6 +203,6 @@ void Pelimoottori::mainLoop(){
 				kaupunki->lataaKuvat();
 			}
 			SDL_RenderPresent( gRenderer );
-			}
+		}
 }
 
