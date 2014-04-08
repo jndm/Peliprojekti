@@ -106,6 +106,14 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer, int state)
 			else{
 				maailma->setExplosionTexture(explosionText);
 			}
+			if(!rajatext.loadFromFile("Images/Background/rajat.png", gRenderer))
+			{
+				printf( "Failed to load cannonball -sheet texture!\n" );
+				success = false;
+			}
+			else{
+				maailma->setRajaTexture(rajatext);
+			}
 	}
 
 	return success;

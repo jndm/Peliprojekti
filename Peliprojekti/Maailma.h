@@ -17,6 +17,14 @@ using namespace std;
 
 class Pelimoottori;
 
+struct RajaNelio{
+	int x;
+	int y;
+	int w;
+	int h;
+	int kulma;
+};
+
 struct Rajahdys{
 	int x;
 	int y;
@@ -35,6 +43,7 @@ public:
 	void createStartingEnemys();
 	void setEnemyTexture(Tekstuurit enemyText);
 	void setEnemyHealthBarTexture(Tekstuurit enemyHBText);
+	void setRajaTexture(Tekstuurit t);
 	int getKameraloc();
 	Kamera getCamera(){ return camera; }
 	void checkCollisions();
@@ -50,6 +59,7 @@ private:
 	Tekstuurit enemyTexture;
 	Tekstuurit enemyHpBarText;
 	Tekstuurit explosionTexture;
+	Tekstuurit rajatext;
 	SDL_Rect gSpriteClips[FRAMES_IN_SPRITESHEET];
 	GUI* gui;
 	Vihollinen* vihollinen;
@@ -57,6 +67,9 @@ private:
 	int explosionFrame;
 	bool renderExplosion(Rajahdys r);
 	vector<Rajahdys> rajahdykset;
+	void luoKentanRajat();
 	Rajahdys rajahdys;
+	RajaNelio rajaneliot[15];
+	SDL_Rect rajat[15];
 };
 #endif
