@@ -1,8 +1,9 @@
 #include "MediaLoader.h"
 
-MediaLoader::MediaLoader(Maailma* m, GUI* g){
+MediaLoader::MediaLoader(Maailma* m, GUI* g, Kaupunki* k){
 	maailma = m;
 	gui = g;
+	kaupunki = k;
 }
 
 bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
@@ -57,6 +58,49 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 	else{
 		gui->setSpeedSetterButtonTeksture(ssButton);
 	}
+
+	//Lataa Kaupungin tausta
+	if(!kyla_kuva.loadFromFile("Images/Background/Kaupunki.bmp", gRenderer) )
+	{
+		printf( "Failed to load kaupunki texture!\n" );
+		success = false;
+	}else{
+		kaupunki->setTaustaTexture(kyla_kuva);
+	}
+	//lataa Asepaja kylään
+	if(!taloAse_kuva.loadFromFile("Images/Houses/talo.bmp", gRenderer) )
+	{
+		printf( "Failed to load asepaja texture!\n" );
+		success = false;
+	}else{
+		kaupunki->setAsepajaTexture(taloAse_kuva);
+	}
+	//lataa Telakka kylään
+	if(!taloTela_kuva.loadFromFile("Images/Houses/talo.bmp", gRenderer) )
+	{
+		printf( "Failed to load telakka texture!\n" );
+		success = false;
+	}else{
+		kaupunki->setTelakkaTexture(taloTela_kuva);
+	}
+	//lataa Rautapaja kylään
+	if(!taloRau_kuva.loadFromFile("Images/Houses/rautaPaja.png", gRenderer) )
+	{
+		printf( "Failed to load rautapaja texture!\n" );
+		success = false;
+	}else{
+		kaupunki->setRautapajaTexture(taloRau_kuva);
+	}
+	//lataa Taverna kylään
+	if(!taloTave_kuva.loadFromFile("Images/Houses/talo.bmp", gRenderer) )
+	{
+		printf( "Failed to load taverna texture!\n" );
+		success = false;
+	}else{
+		kaupunki->setTavernaTexture(taloTave_kuva);
+	}
+
+
 
 	return success;
 }

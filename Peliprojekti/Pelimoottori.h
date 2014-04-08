@@ -14,6 +14,7 @@
 #include "MediaLoader.h"
 #include "GUI.h"
 #include "Kaupunki.h"
+#include "PeliTila.h"
 
 class Maailma;
 class MediaLoader;
@@ -65,6 +66,7 @@ private:
 	MediaLoader* mediaLoader;
 	GUI* gui;
 	Kaupunki* kaupunki;
+	PeliTila* pelitila;
 
 public:
 	Pelimoottori(void);

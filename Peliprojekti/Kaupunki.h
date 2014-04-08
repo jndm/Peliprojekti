@@ -1,11 +1,13 @@
-#pragma once
 #ifndef KAUPUNKI_H
 #define KAUPUNKI_H
+
+#include "Tekstuurit.h"
+#include "PeliTila.h"
 
 class Kaupunki
 {
 public:
-	Kaupunki(SDL_Renderer* gRend);
+	Kaupunki(PeliTila* pelitila);
 	//~Kaupunki(void);
 	void lataaKuvat();
 	void avaaLaivatelakka();
@@ -13,28 +15,34 @@ public:
 	void avaaAsepaja();
 	void avaaRautapaja();
 	void handleEvent();
+	void setTaustaTexture(Tekstuurit tausta);
+	void setAsepajaTexture(Tekstuurit talo);
+	void setRautapajaTexture(Tekstuurit talo);
+	void setTavernaTexture(Tekstuurit talo);
+	void setTelakkaTexture(Tekstuurit talo);
 
 private:
 	//tekstuurit
 
-	SDL_Texture* taloAse_kuva;
+	PeliTila* pelitila;
+
+	Tekstuurit taloAse;
 	SDL_Rect taloAse_rect;
 
-	SDL_Texture* taloTave_kuva;
+	Tekstuurit taloTave;
 	SDL_Rect taloTave_rect;
 
-	SDL_Texture* taloTela_kuva;
+	Tekstuurit taloTela;
 	SDL_Rect taloTela_rect;
 
-	SDL_Texture* taloRau_kuva;
+	Tekstuurit taloRau;
 	SDL_Rect taloRau_rect;
 
-	SDL_Texture* kyla_kuva;
+	Tekstuurit kyla;
 	SDL_Rect kyla_rect;
 
 
 	SDL_Event kylaEvent;
-	SDL_Renderer* gRenderer;
 
 	bool quit;
 };

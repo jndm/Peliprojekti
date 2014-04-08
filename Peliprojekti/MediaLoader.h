@@ -8,6 +8,7 @@
 #include "Pelihahmo.h"
 #include "GUI.h"
 #include "Maailma.h"
+#include "Kaupunki.h"
 
 class Maailma;
 
@@ -15,7 +16,7 @@ class MediaLoader{
 public:
 	//lataa kuvia
 	bool loadMedia(SDL_Renderer* gRenderer);
-	MediaLoader(Maailma* m, GUI* gui);
+	MediaLoader(Maailma* m, GUI* gui, Kaupunki* k);
 
 private:
 	Pelihahmo pelihahmo;
@@ -24,8 +25,14 @@ private:
 	Tekstuurit ssbTeksture;
 	Tekstuurit ssButton;
 	Tekstuurit enemyText;
+	Tekstuurit taloAse_kuva;
+	Tekstuurit taloTave_kuva;
+	Tekstuurit taloTela_kuva;
+	Tekstuurit taloRau_kuva;
+	Tekstuurit kyla_kuva;
 	Maailma* maailma;
 	GUI* gui;
+	Kaupunki* kaupunki;
 };
 
 #endif

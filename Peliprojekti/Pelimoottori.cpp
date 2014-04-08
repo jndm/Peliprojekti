@@ -8,8 +8,12 @@ Pelimoottori::Pelimoottori(void){
 	FRAMETIMESTEP = 1.f/60.f;
 	sliderinLiikutus = false;
 	gui = new GUI();
+	pelitila = new PeliTila();
+	kaupunki = new Kaupunki(pelitila);
+	pelitila->setTila(pelitila->maailmassa);
 	maailma = new Maailma(this);
-	mediaLoader = new MediaLoader(maailma, gui);
+	mediaLoader = new MediaLoader(maailma, gui, kaupunki);
+	
 }
 
 Pelimoottori::~Pelimoottori(void){
@@ -122,6 +126,10 @@ void Pelimoottori::handleEvent(){
 			case SDLK_RIGHT:
 				maailma->getPelihahmo()->setXVelocity(200, 1);			
 			break;
+			case SDLK_k:
+				printf("kaupunkiin");
+				pelitila->setTila(pelitila->kaupungissa);
+			break;
 		}
 
 	}
@@ -144,11 +152,11 @@ void Pelimoottori::handleEvent(){
 	}
 
 	//kaupungin avaus
-	if( e.type == SDLK_k )
+	/*if( e.type == SDLK_k )
 	{
-		kaupunki = new Kaupunki(gRenderer);
-		kaupunki->lataaKuvat;
-	}
+		printf("kaupunkiin");
+		kaupunki->lataaKuvat();
+	}*/
 }
 
 int Pelimoottori::start()
@@ -181,14 +189,20 @@ void Pelimoottori::mainLoop(){
 		while( !quit )
 		{
 			//Tarkkaile näppäimiä
-			while( SDL_PollEvent( &e ) != 0 )
-			{
-				handleEvent();
+			if(pelitila->getTila() == pelitila->maailmassa){
+				while( SDL_PollEvent( &e ) != 0 )
+				{
+					handleEvent();
+				}
+				maailma->render();
+				maailma->move(FRAMETIMESTEP);
 			}
-			maailma->render();
-			maailma->move(FRAMETIMESTEP);
 			//Päivitä ruutu
+			
+			if(pelitila->getTila() == pelitila->kaupungissa){
+				kaupunki->lataaKuvat();
+			}
 			SDL_RenderPresent( gRenderer );
-		}
+			}
 }
 
