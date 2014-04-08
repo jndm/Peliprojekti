@@ -7,9 +7,11 @@ Pelimoottori::Pelimoottori(void){
 	LEVEL_HEIGHT = 2048;
 	FRAMETIMESTEP = 1.f/60.f;
 	sliderinLiikutus = false;
+	state = MAINMENU;
 	gui = new GUI();
+	mainmenu = new MainMenu(this);
 	maailma = new Maailma(this);
-	mediaLoader = new MediaLoader(maailma, gui);
+	mediaLoader = new MediaLoader(maailma, gui, mainmenu);
 }
 
 Pelimoottori::~Pelimoottori(void){
@@ -77,11 +79,27 @@ void Pelimoottori::close()
 	gWindow = NULL;
 	gRenderer = NULL;
 	delete mediaLoader;
+	delete mainmenu;
 	delete maailma;
 	delete gui;
 	//Quit SDL subsystems
 	IMG_Quit();
 	SDL_Quit();
+}
+
+void Pelimoottori::handleMainMenuEvent(){
+	if( e.type == SDL_QUIT ){
+		quit = true;
+	}else if( e.type == SDL_MOUSEBUTTONDOWN){
+		int x, y;
+        SDL_GetMouseState( &x, &y );
+		if(mainmenu->checkIfHitStart(x, y)){
+			state = GAME;
+			loadGame();
+		}else if(mainmenu->checkIfHitQuit(x, y)){
+			quit = true;
+		}
+	}
 }
 
 void Pelimoottori::handleEvent(){
@@ -94,11 +112,14 @@ void Pelimoottori::handleEvent(){
         SDL_GetMouseState( &x, &y );
 		if(gui->checkIfHitSideBar(x, y)){
 			gui->moveSpeedBarButton(y);
-			maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
+			maailma->getPelihahmo()->setXVelocity((480-y)/4, 1);
+			maailma->getPelihahmo()->setYVelocity((480-y)/4, 1);
 			sliderinLiikutus = true;
+		} else {
+			maailma->getPelihahmo()->setKohde(x,y);
+			maailma->getPelihahmo()->setKaantyminen(true);
+			kaantyminen = true;
 		}
-		else
-			maailma->getPelihahmo()->kaannossuunta(x,y);
 	}else if( e.type == SDL_MOUSEBUTTONUP && sliderinLiikutus){
 		sliderinLiikutus = false;
 	}else if( e.type == SDL_MOUSEMOTION && sliderinLiikutus){
@@ -106,25 +127,35 @@ void Pelimoottori::handleEvent(){
         SDL_GetMouseState( &x, &y );
 		gui->moveSpeedBarButton(y);
 		maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
+		maailma->getPelihahmo()->setYVelocity((480-y)/2, 1);
+	}else if( e.type == SDL_MOUSEBUTTONUP && kaantyminen){
+		kaantyminen = false;
+		maailma->getPelihahmo()->setKaantyminen(false);
+	}else if( e.type == SDL_MOUSEMOTION && kaantyminen){
+		int x, y;
+        SDL_GetMouseState( &x, &y );
+		maailma->getPelihahmo()->setKohde(x,y);
 	}
-	else if( e.type == SDL_KEYDOWN){
+	if( e.type == SDL_KEYDOWN){
 		//Mitä painettiin?
 		switch( e.key.keysym.sym ){
 			case SDLK_UP:
-				maailma->getPelihahmo()->setYVelocity(200,-1);
+				//maailma->getPelihahmo()->setYVelocity(200,-1);
 			break;
 			case SDLK_DOWN:
-				maailma->getPelihahmo()->setYVelocity(200, 1);
+				//maailma->getPelihahmo()->setYVelocity(200, 1);
 			break;
 			case SDLK_LEFT:
-				maailma->getPelihahmo()->setXVelocity(200,-1);
+				maailma->getPelihahmo()->ammu(-1);
+				//maailma->getPelihahmo()->setXVelocity(200,-1);
 			break;
 			case SDLK_RIGHT:
-				maailma->getPelihahmo()->setXVelocity(200, 1);			
+				maailma->getPelihahmo()->ammu(1);
+				//maailma->getPelihahmo()->setXVelocity(200, 1);			
 			break;
 		}
 
-	}
+	}/*
 	if( e.type == SDL_KEYUP && e.key.repeat == 0 )
     {
         switch( e.key.keysym.sym ){
@@ -141,7 +172,7 @@ void Pelimoottori::handleEvent(){
 				maailma->getPelihahmo()->setXVelocity(0, 1);					
 			break;
 		}
-	}
+	}*/
 }
 
 int Pelimoottori::start()
@@ -154,13 +185,12 @@ int Pelimoottori::start()
 	else
 	{
 		//Load media
-		if( !mediaLoader->loadMedia(gRenderer) )
+		if( !mediaLoader->loadMedia(gRenderer, MAINMENU) )
 		{
 			printf( "Failed to load media!\n" );
 		}
 		else
 		{	
-			maailma->createStartingEnemys();
 			mainLoop();
 		}
 	}
@@ -169,10 +199,30 @@ int Pelimoottori::start()
 	return 0;
 }
 
+int Pelimoottori::loadGame(){
+	if( !mediaLoader->loadMedia(gRenderer, GAME) )
+		{
+			printf( "Failed to load media!\n" );
+		}
+	else
+		{	
+			maailma->createStartingEnemys();
+		}
+	return 0;
+}
+
 void Pelimoottori::mainLoop(){
 	quit = false;
-		while( !quit )
+		while( !quit ){
+			switch(state){
+				case MAINMENU:
+					while( SDL_PollEvent( &e ) != 0 )
 		{
+						handleMainMenuEvent();
+					}
+					mainmenu->render();
+					break;
+				case GAME:
 			//Tarkkaile näppäimiä
 			while( SDL_PollEvent( &e ) != 0 )
 			{
@@ -180,8 +230,9 @@ void Pelimoottori::mainLoop(){
 			}
 			maailma->render();
 			maailma->move(FRAMETIMESTEP);
+					maailma->checkCollisions();
+				}
 			//Päivitä ruutu
 			SDL_RenderPresent( gRenderer );
 		}
 }
-

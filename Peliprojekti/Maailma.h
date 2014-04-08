@@ -10,10 +10,18 @@
 #include "Vihollinen.h"
 #include <vector>
 #include <time.h>
+#include <thread>
+#include "Tykinkuula.h"
 
 using namespace std;
 
 class Pelimoottori;
+
+struct Rajahdys{
+	int x;
+	int y;
+	bool valmis;
+};
 
 class Maailma{
 public:
@@ -22,9 +30,11 @@ public:
 	void render();
 	void move(float timestep);
 	void setTaustaTexture(Tekstuurit taustaText);
+	void setExplosionTexture(Tekstuurit explosionText);
 	Pelihahmo* getPelihahmo();
 	void createStartingEnemys();
 	void setEnemyTexture(Tekstuurit enemyText);
+	void setEnemyHealthBarTexture(Tekstuurit enemyHBText);
 	void setTargetTexture(Tekstuurit targetText);
 	Tekstuurit* getEnemyTexture() {
 		return &enemyTexture;
@@ -33,6 +43,8 @@ public:
 		return &targetTexture;
 	}
 	int getKameraloc();
+	Kamera getCamera(){ return camera; }
+	void checkCollisions();
 
 private:
 	int SCREEN_WIDTH;
@@ -43,10 +55,16 @@ private:
 	Kamera camera;
 	Tekstuurit tausta;
 	Tekstuurit enemyTexture;
+	Tekstuurit enemyHpBarText;
+	Tekstuurit explosionTexture;
+	SDL_Rect gSpriteClips[FRAMES_IN_SPRITESHEET];
 	Tekstuurit targetTexture;
 	GUI* gui;
 	Vihollinen* vihollinen;
 	vector<Vihollinen*> viholliset;
-
+	int explosionFrame;
+	bool renderExplosion(Rajahdys r);
+	vector<Rajahdys> rajahdykset;
+	Rajahdys rajahdys;
 };
 #endif
