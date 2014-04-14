@@ -3,6 +3,10 @@
 Pelihahmo::Pelihahmo(){
 	x=100;
 	y=100;
+	etupalloX = 0;
+	etupalloY = 0;
+	takapalloX = 0;
+	takapalloY = 0;
 	dx = 0;
 	dy = 0;
 	width = 50;
@@ -17,6 +21,16 @@ Pelihahmo::Pelihahmo(){
 
 Pelihahmo::~Pelihahmo(void){
 
+}
+
+void Pelihahmo::laskePallot(){
+	int keskiX = x + width;
+	int keskiY = y + height;
+	etupalloX = keskiX + (width / 2 * (std::cos(suunta*M_PI / 180)));
+	etupalloY = keskiY + (height / 2 * (std::sin(suunta*M_PI / 180)));
+
+	takapalloX = keskiX - (width / 2 * (std::cos(suunta*M_PI / 180)));
+	takapalloY = keskiY - (height / 2 * (std::sin(suunta*M_PI / 180)));
 }
 
 
@@ -39,6 +53,7 @@ void Pelihahmo::move(float fts){
 				suunta=suunta+360;
 		}
 	}
+	laskePallot();
 	printf("%f\n",fts);
 	x+=dx*fts*(std::cos(suunta*M_PI/180));
 	y+=dy*fts*(std::sin(suunta*M_PI/180));

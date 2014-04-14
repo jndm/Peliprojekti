@@ -12,13 +12,14 @@ using namespace std;
 class Pelihahmo{
 private:
 	int width, height,kamerax,kameray,locxmap,locymap;
-	float x, y, dy, dx,suunta;
+	float x, y, dy, dx,suunta,etupalloX,etupalloY,takapalloX,takapalloY;
 	Tekstuurit pelihahmoText, cannonballText;
 	vector<Tykinkuula*> cannonballs;
 	int camX;
 	int camY;
 	Uint32 lastShootTime, shootingDelay;
 	bool kaantyminen;
+	void laskePallot();
 	int merkki(float f);
 
 public:
