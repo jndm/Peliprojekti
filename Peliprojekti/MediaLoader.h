@@ -8,22 +8,32 @@
 #include "Pelihahmo.h"
 #include "GUI.h"
 #include "Maailma.h"
+#include "MainMenu.h"
 
 class Maailma;
 
 class MediaLoader{
 public:
 	//lataa kuvia
-	bool loadMedia(SDL_Renderer* gRenderer);
-	MediaLoader(Maailma* m, GUI* gui);
+	bool loadMedia(SDL_Renderer* gRenderer, int state);
+	MediaLoader(Maailma* m, GUI* gui, MainMenu* mm);
 
 private:
+	//MainMenun tekstuurit
+	MainMenu* mainmenu;
+	Tekstuurit mainmenuBtext;
+	Tekstuurit mainmenuTitletext;
+
+	//Maailman tekstuurit
 	Pelihahmo pelihahmo;
 	Tekstuurit pelihahmoText;
 	Tekstuurit taustaText;
 	Tekstuurit ssbTeksture;
 	Tekstuurit ssButton;
 	Tekstuurit enemyText;
+	Tekstuurit cannonballText;
+	Tekstuurit explosionText;
+	Tekstuurit enemyHealthBarText;
 	Maailma* maailma;
 	GUI* gui;
 };

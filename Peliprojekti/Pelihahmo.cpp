@@ -1,15 +1,18 @@
 #include "Pelihahmo.h"
 
-Pelihahmo::Pelihahmo(void){
+Pelihahmo::Pelihahmo(){
 	x=100;
 	y=100;
 	dx = 0;
 	dy = 0;
 	width = 50;
 	height = 50;
+	lastShootTime = 0;
+	shootingDelay = 1000;
 	suunta=0;
 	locxmap=x;
 	locymap=y;
+	kaantyminen=false;
 }
 
 Pelihahmo::~Pelihahmo(void){
@@ -18,7 +21,7 @@ Pelihahmo::~Pelihahmo(void){
 
 
 void Pelihahmo::move(float fts){
-	if(x!=locxmap&&y!=locymap){
+	if(kaantyminen){
 		int s=kaannossuunta();
 		if(s>0){
 			//tee oikealle liikkuminen
@@ -35,10 +38,11 @@ void Pelihahmo::move(float fts){
 			if(suunta<-180)
 				suunta=suunta+360;
 		}
-	printf("%f\n",suunta);
+	}
+	printf("%f\n",fts);
 	x+=dx*fts*(std::cos(suunta*M_PI/180));
 	y+=dy*fts*(std::sin(suunta*M_PI/180));
-	}
+
 	//float suuntax=cos(suunta);
 	//float suuntay=sin(suunta);
 	//float position = ( (Bx-Ax)*(Y-Ay) - (By-Ay)*(X-Ax) );
@@ -55,81 +59,96 @@ int Pelihahmo::kaannossuunta(){//int s>0 oikealle, s=0 suoraan, s<0 vasemmalle
 	int deltax=locxmap-(x+width/2);
 	int deltay=locymap-(y+height/2);
 	float angleInDegrees = atan2(deltay, deltax) * 180 / M_PI;
+
 	//printf("%f\n",angleInDegrees);
-
-	if(angleInDegrees>0&&suunta>0&&angleInDegrees>suunta){
-		//printf("oik\n");
-		//k‰‰nny oikealle
-		return 1;
-	}
-	else if(angleInDegrees>=0&&suunta>=0&&angleInDegrees<suunta){
-		//printf("vase\n");
-		//k‰‰nny vasemmalle
-		return -1;
-	}
-	else if(angleInDegrees<=0&&suunta>=0&&(180-suunta)>angleInDegrees*(-1)){
-		//printf("vase\n");
-		//k‰‰nny vasemmalle
-		return -1;
-	}
-	else if(angleInDegrees<=0&&suunta>=0&&(180-suunta)<angleInDegrees*(-1)){
-		//printf("oik\n");
-		//k‰‰nny oikealle
-		return 1;
-	}
-
-
-	else if(angleInDegrees<=0&&suunta<=0&&angleInDegrees>suunta){
-		//printf("oik\n");
-		//k‰‰nny oikealle
-		return 1;
-	}
-	else if(angleInDegrees<=0&&suunta<=0&&angleInDegrees<suunta){
-		//printf("vase\n");
-		//k‰‰nny vasemmalle
-		return -1;
-	}
-	else if(angleInDegrees>=0&&suunta<=0&&(180+suunta)<angleInDegrees){
-		//printf("vase\n");
-		//k‰‰nny vasemmalle
-		return -1;
-	}
-	else if(angleInDegrees>=0&&suunta<=0&&(180+suunta)>angleInDegrees){
-		//printf("oik\n");
-		//k‰‰nny oikealle
-		return 1;
-	}
-
-
-	else if(angleInDegrees>=0&&suunta>=0&&angleInDegrees-suunta==180||angleInDegrees-suunta==-180){
-		//printf("vase\n");
-		//k‰‰nny vasemmalle
-		return -1;
-	}
-	else if(angleInDegrees>=0&&suunta<=0&&angleInDegrees-suunta==180||angleInDegrees-suunta==-180){
-		//printf("vase\n");
-		//k‰‰nny vasemmalle
-		return -1;
-	}
-	else if(angleInDegrees<=0&&suunta>=0&&angleInDegrees-suunta==180||angleInDegrees-suunta==-180){
-		//printf("vase\n");
-		//k‰‰nny vasemmalle
-		return -1;
-	}
-	else if(angleInDegrees<=0&&suunta<=0&&angleInDegrees-suunta==180||angleInDegrees-suunta==-180){
-		//printf("vase\n");
-		//k‰‰nny vasemmalle
-		return -1;
-	}
-
-	else if (angleInDegrees == suunta){
+	if(angleInDegrees - suunta < 1 && angleInDegrees - suunta > -1){
 		return 0;
+	}else{
+		if(angleInDegrees>0&&suunta>0&&angleInDegrees>suunta){
+			//printf("oik\n");
+			//k‰‰nny oikealle
+			return 1;
+		}
+		else if(angleInDegrees>=0&&suunta>=0&&angleInDegrees<suunta){
+			//printf("vase\n");
+			//k‰‰nny vasemmalle
+			return -1;
+		}
+		else if(angleInDegrees<=0&&suunta>=0&&(180-suunta)>angleInDegrees*(-1)){
+			//printf("vase\n");
+			//k‰‰nny vasemmalle
+			return -1;
+		}
+		else if(angleInDegrees<=0&&suunta>=0&&(180-suunta)<angleInDegrees*(-1)){
+			//printf("oik\n");
+			//k‰‰nny oikealle
+			return 1;
+		}
+
+
+		else if(angleInDegrees<=0&&suunta<=0&&angleInDegrees>suunta){
+			//printf("oik\n");
+			//k‰‰nny oikealle
+			return 1;
+		}
+		else if(angleInDegrees<=0&&suunta<=0&&angleInDegrees<suunta){
+			//printf("vase\n");
+			//k‰‰nny vasemmalle
+			return -1;
+		}
+		else if(angleInDegrees>=0&&suunta<=0&&(180+suunta)<angleInDegrees){
+			//printf("vase\n");
+			//k‰‰nny vasemmalle
+			return -1;
+		}
+		else if(angleInDegrees>=0&&suunta<=0&&(180+suunta)>angleInDegrees){
+			//printf("oik\n");
+			//k‰‰nny oikealle
+			return 1;
+		}
+
+
+		else if(angleInDegrees>=0&&suunta>=0&&angleInDegrees-suunta==180||angleInDegrees-suunta==-180){
+			//printf("vase\n");
+			//k‰‰nny vasemmalle
+			return -1;
+		}
+		else if(angleInDegrees>=0&&suunta<=0&&angleInDegrees-suunta==180||angleInDegrees-suunta==-180){
+			//printf("vase\n");
+			//k‰‰nny vasemmalle
+			return -1;
+		}
+		else if(angleInDegrees<=0&&suunta>=0&&angleInDegrees-suunta==180||angleInDegrees-suunta==-180){
+			//printf("vase\n");
+			//k‰‰nny vasemmalle
+			return -1;
+		}
+		else if(angleInDegrees<=0&&suunta<=0&&angleInDegrees-suunta==180||angleInDegrees-suunta==-180){
+			//printf("vase\n");
+			//k‰‰nny vasemmalle
+			return -1;
+		}
+
+		else{
+			//printf("suoraan\n");
+			//kulje suoraa
+			return 0;
+		}
 	}
-	else{
-		//printf("suoraan\n");
-		//kulje suoraa
-		return 0;
+	/*
+	float kulma = atan2(deltax, deltay);
+	kulma = (kulma + M_PI) - (suunta*M_PI/180 + M_PI);
+	if(fabs(kulma) > M_PI) {
+	kulma = kulma - merkki(kulma)*2*M_PI;
 	}
+	if(kulma < -M_PI/180) {
+	return 1;
+	} else if(kulma > M_PI/180) {
+	return -1;
+	} else {
+	return 0;
+	}*/
+
 }
 
 float Pelihahmo::getX(){
@@ -148,28 +167,86 @@ int Pelihahmo::getHeight(){
 	return height;
 }
 
-void Pelihahmo::render(int camX, int camY )
+void Pelihahmo::render(int _camX, int _camY )
 {
-	kamerax=camX;
-	kameray=camY;
-    //N‰yt‰ neliˆ kameran suhteen
-	pelihahmoText.render( (int)(x - camX), (int)(y - camY) );
+	kamerax = _camX;
+	kameray = _camY;
+	//N‰yt‰ neliˆ kameran suhteen
+	pelihahmoText.render( (int)(x - kamerax), (int)(y - kameray) , NULL, suunta);
 
+}
+
+void Pelihahmo::setKaantyminen(bool _kaantyminen){
+	kaantyminen = _kaantyminen;
 }
 
 //T‰lle jotain fiksumpaa ratkaisua?
-void Pelihahmo::setTekstuuri(Tekstuurit tekstuuri){
+void Pelihahmo::setCharacterTexture(Tekstuurit tekstuuri){
 	pelihahmoText = tekstuuri;
 }
 
+void Pelihahmo::setCannonballTexture(Tekstuurit tekstuuri){
+	cannonballText = tekstuuri;
+}
+
 void Pelihahmo::setXVelocity(float vx, int direction){
-	
+
 	dx = vx;
-	
+
 }
 
 void Pelihahmo::setYVelocity(float vy, int direction){
-	
+
 	dy = vy;
-	
+
+}
+void Pelihahmo::ammu(int tykki){
+
+	if(SDL_GetTicks() > lastShootTime + shootingDelay){
+		cannonballs.push_back(new Tykinkuula(this, &cannonballText, suunta, tykki, kaannossuunta()));
+		lastShootTime = SDL_GetTicks();
+	}
+}
+
+int Pelihahmo::merkki(float f) {
+	if (f > 0) return 1;
+	return (f == 0) ? 0 : -1;
+}
+
+bool Pelihahmo::checkIfVihollinenHit(Vihollinen* vih){
+	int leftP,rightP,topP,bottomP;
+	int leftV,rightV,topV,bottomV;
+
+	leftP=x;
+	rightP=x+width;
+	topP=y;
+	bottomP=y+height;
+
+	leftV=vih->getX();
+	rightV=leftV+vih->getWidth();
+	topV=vih->getY();
+	bottomV=topV+vih->getHeight();
+
+	if( bottomP <= topV ) 
+	{ 
+		return false; 
+	} 
+	if( topP >= bottomV ) 
+	{ 
+		return false; 
+	} 
+	if( rightP <= leftV ) 
+	{ 
+		return false; 
+	} 
+	if( leftP >= rightV ) 
+	{ 
+		return false; 
+	} //If none of the sides from A are outside B 
+	printf("osu");
+	return true; 
+}
+void Pelihahmo::knockBack(){
+	x+=dx*1/60*(std::cos((suunta-180)*M_PI/180));
+	y+=dy*1/60*(std::sin((suunta-180)*M_PI/180));
 }

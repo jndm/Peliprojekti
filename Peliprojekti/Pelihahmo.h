@@ -2,29 +2,47 @@
 #define PELIHAHMO_H
 
 #include "Tekstuurit.h"
+#include "Tykinkuula.h"
+#include <vector>
+#include "Vihollinen.h"
 
 class Kamera;
+using namespace std;
+
 class Pelihahmo{
 private:
 	int width, height,kamerax,kameray,locxmap,locymap;
 	float x, y, dy, dx,suunta;
-
+	Tekstuurit pelihahmoText, cannonballText;
+	vector<Tykinkuula*> cannonballs;
+	int camX;
+	int camY;
+	Uint32 lastShootTime, shootingDelay;
+	bool kaantyminen;
+	int merkki(float f);
 
 public:
 	void move(float fts);
-	Pelihahmo(void);
+	Pelihahmo();
 	~Pelihahmo(void);
 	float getX();
 	float getY();
 	int getWidth();
 	int getHeight();
+	void setKaantyminen(bool kaantyminen);
 	void setXVelocity(float vx, int direction);
 	void setYVelocity(float vy, int direction);
 	int kaannossuunta();
 	void setKohde(int mx, int my);
 	void render( int camX, int camY );
-	Tekstuurit pelihahmoText;
-	void setTekstuuri(Tekstuurit tekstuuri);
+	void setCharacterTexture(Tekstuurit tekstuuri);
+	void setCannonballTexture(Tekstuurit tekstuuri);
+	void ammu(int tykki);
+	vector<Tykinkuula*> *getCannonballs(){ return &cannonballs; }
+	float getXvelocity(){ return dx; }
+	float getYvelocity(){ return dy; }
+	bool checkIfVihollinenHit(Vihollinen* vih);
+	void knockBack();
 };
 
 #endif

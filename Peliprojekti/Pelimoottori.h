@@ -13,9 +13,12 @@
 #include "Maailma.h"
 #include "MediaLoader.h"
 #include "GUI.h"
+#include "MainMenu.h"
 
+class MainMenu;
 class Maailma;
 class MediaLoader;
+
 
 class Pelimoottori {
 private:
@@ -26,8 +29,18 @@ private:
 	int LEVEL_HEIGHT;
 	float FRAMETIMESTEP;
 
+	int state;
+	enum gamestate{
+		MAINMENU, GAME
+	};
+
+	MainMenu* mainmenu;
+
 	//Käynnistää sdl:n ja luo ikkunan
 	bool init();
+
+	//lataa pelintiedot
+	int loadGame();
 
 	//Main loop
 	void mainLoop();
@@ -41,6 +54,9 @@ private:
 	//Kuvan latausta varten tehty metodi (ei käytössä)
 	SDL_Texture* loadTexture( std::string path );
 	
+	//MainMenun handler
+	void handleMainMenuEvent();
+
 	//Näppäimistön käsittelijä
 	void handleEvent();
 
@@ -67,7 +83,9 @@ private:
 public:
 	Pelimoottori(void);
 	~Pelimoottori(void);
+	//start
 	int start();
+	bool kaantyminen;
 	int getSCREENWIDTH(){return SCREEN_WIDTH;}
 	int getSCREENHEIGHT(){return SCREEN_HEIGHT;}
 	int getLEVELWIDTH(){return LEVEL_WIDTH;}
