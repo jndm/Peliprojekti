@@ -122,7 +122,9 @@ int Pelihahmo::kaannossuunta(){//int s>0 oikealle, s=0 suoraan, s<0 vasemmalle
 		return -1;
 	}
 
-
+	else if (angleInDegrees == suunta){
+		return 0;
+	}
 	else{
 		//printf("suoraan\n");
 		//kulje suoraa
