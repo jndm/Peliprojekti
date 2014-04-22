@@ -18,11 +18,12 @@ Vihollinen::Vihollinen(float xp, float yp, float _suunta, Pelihahmo* _pelihahmo,
 	centerY = y + height/2;
 	velocity = 0.f;
 	//vihollinenText = text;
+	lastShootTime = 0;
+	shootingDelay = 1000;
 	maailma = _maailma;
 	pelihahmo = _pelihahmo;
 	suunta = _suunta;
-	turnDirection = 0.f;
-	double roots[4];
+	turnDirection = 0;
 	hp = 5;
 	for(int i=0; i<2; ++i){
 		gSpriteClips[i].x = i*52;
@@ -44,6 +45,10 @@ void Vihollinen::setHealthBarText(Tekstuurit* tekst) {
 	healthBarText = tekst;
 }
 
+void Vihollinen::setCannonballText(Tekstuurit* tekst) {
+	cannonballText = tekst;
+}
+
 void Vihollinen::move(float fts) {
 	float pelaajaX = pelihahmo->getX() + pelihahmo->getWidth()/2;
 	float pelaajaY = pelihahmo->getY() + pelihahmo->getHeight()/2;
@@ -62,8 +67,9 @@ void Vihollinen::move(float fts) {
 	}
 
 	turnDirection = calculateTurnDirection();
+	fireCannonball(1);
 
-	suunta += turnDirection * M_PI/180;
+	suunta += turnDirection * M_PI/180.f;
 	if(suunta < -M_PI) {
 		suunta = 2 * M_PI + suunta;
 	}
@@ -125,7 +131,7 @@ int Vihollinen::calculateTurnDirection() {
 	float kulma = atan2(targetY - centerY, targetX - centerX);
 	kulma = (kulma + M_PI) - (suunta + M_PI);
 	if(fabs(kulma) > M_PI) {
-		kulma = kulma - merkki(kulma)*2*M_PI;
+		kulma = kulma - merkki(kulma)*2.f*M_PI;
 	}
 	if(kulma < -M_PI/180) {
 		return -1;
@@ -133,6 +139,13 @@ int Vihollinen::calculateTurnDirection() {
 		return 1;
 	} else {
 		return 0;
+	}
+}
+
+void Vihollinen::fireCannonball(int cannon) {
+	if(SDL_GetTicks() > lastShootTime + shootingDelay){
+		cannonballs.push_back(new Tykinkuula(this, cannonballText, suunta, cannon, calculateTurnDirection()));
+		lastShootTime = SDL_GetTicks();
 	}
 }
 

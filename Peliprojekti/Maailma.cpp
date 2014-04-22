@@ -23,6 +23,9 @@ void Maailma::render(){
 	for(std::vector<Tykinkuula*>::iterator it = pelihahmo->getCannonballs()->begin(); it != pelihahmo->getCannonballs()->end(); ++it) {
 		(*it)->render(camera.getCameraX(), camera.getCameraY());
 	}
+	for(std::vector<Tykinkuula*>::iterator it = vihollinen->getCannonballs()->begin(); it != vihollinen->getCannonballs()->end(); ++it) {
+		(*it)->render(camera.getCameraX(), camera.getCameraY());
+	}
 	int i=0;
 	for(std::vector<Rajahdys>::iterator it = rajahdykset.begin(); it != rajahdykset.end(); ++i) {
 		if(renderExplosion(*it)){       //Renderöidään räjähdykset ja poistetaan ne kun renderöinti on valmis
@@ -101,6 +104,7 @@ void Maailma::createStartingEnemys(){
 		viholliset[viholliset.size() - 1]->setHealthBarText(&enemyHpBarText);
 		viholliset[viholliset.size() - 1]->setVihollinenText(&enemyTexture);
 		viholliset[viholliset.size() - 1]->setTargetText(&targetTexture);
+		viholliset[viholliset.size() - 1]->setCannonballText(&targetTexture);
 	}
 }
 
