@@ -34,6 +34,7 @@ private:
 	Tekstuurit cannonballText;
 	Tekstuurit explosionText;
 	Tekstuurit enemyHealthBarText;
+	Tekstuurit targetText;
 	Tekstuurit rajatext;
 	Maailma* maailma;
 	GUI* gui;

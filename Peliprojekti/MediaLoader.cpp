@@ -96,6 +96,7 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer, int state)
 			}
 			else{
 				maailma->getPelihahmo()->setCannonballTexture(cannonballText);
+				maailma->setCannonballTexture(cannonballText);
 			}
 			//Lataa räjähdyksen spritesheet
 			if( !explosionText.loadFromFile( "Images/Background/Rajahdys.png", gRenderer ) )
@@ -115,6 +116,14 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer, int state)
 				maailma->setRajaTexture(rajatext);
 			}
 	}
-
+	//Load target texture
+	if( !targetText.loadFromFile( "Images/Characters/target.png", gRenderer ) )
+	{
+		printf( "Failed to load target texture!\n" );
+		success = false;
+	}
+	else{
+		maailma->setTargetTexture(targetText);
+	}
 	return success;
 }

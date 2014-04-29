@@ -42,6 +42,14 @@ public:
 	void createStartingEnemys();
 	void setEnemyTexture(Tekstuurit enemyText);
 	void setEnemyHealthBarTexture(Tekstuurit enemyHBText);
+	void setTargetTexture(Tekstuurit targetText);
+	void setCannonballTexture(Tekstuurit cannonballText);
+	Tekstuurit* getEnemyTexture() {
+		return &enemyTexture;
+	}
+	Tekstuurit* getTargetTexture() {
+		return &targetTexture;
+	}
 	void setRajaTexture(Tekstuurit t);
 	int getKameraloc();
 	Kamera getCamera(){ return camera; }
@@ -58,8 +66,10 @@ private:
 	Tekstuurit enemyTexture;
 	Tekstuurit enemyHpBarText;
 	Tekstuurit explosionTexture;
+	Tekstuurit cannonballTexture;
 	Tekstuurit rajatext;
 	SDL_Rect gSpriteClips[FRAMES_IN_SPRITESHEET];
+	Tekstuurit targetTexture;
 	GUI* gui;
 	Vihollinen* vihollinen;
 	vector<Vihollinen*> viholliset;

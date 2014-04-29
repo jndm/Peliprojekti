@@ -19,6 +19,9 @@ void Maailma::render(){
 	pelihahmo->render( camera.getCameraX(), camera.getCameraY() );
 	for(std::vector<Vihollinen*>::iterator it = viholliset.begin(); it != viholliset.end(); ++it) {
 		(*it)->render(camera.getCameraX(), camera.getCameraY());
+		for(std::vector<Tykinkuula*>::iterator it2 = (*it)->getCannonballs()->begin(); it2 != (*it)->getCannonballs()->end(); ++it2) {
+			(*it2)->render(camera.getCameraX(), camera.getCameraY());
+		}
 	}
 	for(std::vector<Tykinkuula*>::iterator it = pelihahmo->getCannonballs()->begin(); it != pelihahmo->getCannonballs()->end(); ++it) {
 		(*it)->render(camera.getCameraX(), camera.getCameraY());
@@ -45,6 +48,16 @@ void Maailma::move(float timestep){
 			it = pelihahmo->getCannonballs()->erase(it);
 		}
 		else it++;
+	}
+	for(std::vector<Vihollinen*>::iterator it = viholliset.begin(); it != viholliset.end(); ++it) {
+		(*it)->move(timestep);
+		for(std::vector<Tykinkuula*>::iterator it2 = (*it)->getCannonballs()->begin(); it2 != (*it)->getCannonballs()->end(); ++i) {
+			(*it2)->move(timestep);
+			if((*it2)->ifRdyToBeDestroyed()){
+				it2 = (*it)->getCannonballs()->erase(it2);
+			}
+			else it2++;
+		}
 	}
 }
 
@@ -85,9 +98,11 @@ Pelihahmo* Maailma::getPelihahmo(){
 void Maailma::createStartingEnemys(){
 	srand(time(0));
 	//viholliset.push_back(new Vihollinen((rand()%LEVEL_WIDTH + 1), (rand()%LEVEL_HEIGHT + 1), enemyTexture));
-	for(int i=0; i<1; i++){
-		int x = rand()%500 + 1;
-		int y = rand()%500 + 1;
+	for(int i=0; i<3; i++){
+		float x = rand()%500 + 1;
+		float y = rand()%500 + 1;
+		//float suunta = M_PI/(rand()%8-4);
+		float suunta = 0;
 
 		//printf("%d",i);
 		if(!viholliset.empty()){
@@ -101,7 +116,11 @@ void Maailma::createStartingEnemys(){
 				}
 			}
 		}
-		viholliset.push_back(new Vihollinen(x, y, &enemyTexture, &enemyHpBarText));
+		viholliset.push_back(new Vihollinen(x, y, suunta, pelihahmo, this));
+		viholliset[viholliset.size() - 1]->setHealthBarText(&enemyHpBarText);
+		viholliset[viholliset.size() - 1]->setVihollinenText(&enemyTexture);
+		viholliset[viholliset.size() - 1]->setTargetText(&targetTexture);
+		viholliset[viholliset.size() - 1]->setCannonballText(&cannonballTexture);
 	}
 }
 
@@ -111,6 +130,10 @@ void Maailma::setEnemyTexture(Tekstuurit enemyText) {
 
 void Maailma::setEnemyHealthBarTexture(Tekstuurit enemyHBText){
 	enemyHpBarText = enemyHBText;
+}
+
+void Maailma::setTargetTexture(Tekstuurit targetText) {
+	targetTexture = targetText;
 }
 
 void Maailma::setTaustaTexture(Tekstuurit taustaText) {
@@ -130,6 +153,10 @@ void Maailma::setExplosionTexture(Tekstuurit enemyText){
 		gSpriteClips[i].h = 30;
 	}
 	explosionFrame = 0;
+}
+
+void Maailma::setCannonballTexture(Tekstuurit cannonballText) {
+	cannonballTexture = cannonballText;
 }
 
 bool Maailma::renderExplosion(Rajahdys r){
