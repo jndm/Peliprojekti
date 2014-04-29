@@ -1,16 +1,37 @@
 #include "MediaLoader.h"
 
-MediaLoader::MediaLoader(Maailma* m, GUI* g, Kaupunki* k){
+MediaLoader::MediaLoader(Maailma* m, GUI* g, MainMenu* mm){
 	maailma = m;
 	gui = g;
+	mainmenu = mm;
 	kaupunki = k;
 }
 
-bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
+bool MediaLoader::loadMedia(SDL_Renderer* gRenderer, int state)
 {
 	//Loading success flag
 	bool success = true;
 
+	switch(state){
+		case 0:
+			if( !mainmenuBtext.loadFromFile( "Images/MainMenu/Buttons.png", gRenderer ) )
+			{
+				printf( "Failed to load mainmenu textures!\n" );
+				success = false;
+			}
+			else{
+				mainmenu->setButtonTextures(mainmenuBtext);
+			}
+			if( !mainmenuTitletext.loadFromFile( "Images/MainMenu/Title.png", gRenderer ) )
+			{
+				printf( "Failed to load mainmenu textures!\n" );
+				success = false;
+			}
+			else{
+				mainmenu->setTitleTexture(mainmenuTitletext);
+			}
+			break;
+		case 1:
 	//Load pelihahmo texture
 	if( !pelihahmoText.loadFromFile( "Images/Characters/Pelihahmo.png", gRenderer ) )
 	{
@@ -18,7 +39,7 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 		success = false;
 	}
 	else{
-		maailma->getPelihahmo()->setTekstuuri(pelihahmoText);
+				maailma->getPelihahmo()->setCharacterTexture(pelihahmoText);
 	}
 
 	//Load background texture
@@ -30,7 +51,7 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 	else{
 		maailma->setTaustaTexture(taustaText);
 	}
-	//Load enemy
+			//Lataa vihollinen
 	if( !enemyText.loadFromFile( "Images/Characters/Vihollinen.png", gRenderer ) )
 	{
 		printf( "Failed to load enemy texture!\n" );
@@ -39,6 +60,16 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 	else{
 		maailma->setEnemyTexture(enemyText);
 	}
+
+			//Lataa enemyhealthbar
+			if( !enemyHealthBarText.loadFromFile( "Images/Characters/Healthbar.png", gRenderer ) )
+			{
+				printf( "Failed to load enemy texture!\n" );
+				success = false;
+			}
+			else{
+				maailma->setEnemyHealthBarTexture(enemyHealthBarText);
+			}
 
 	//Lataa nopeudensäädinpohja
 	if( !ssbTeksture.loadFromFile( "Images/GUI/SpeedSetterTriagle.png", gRenderer ) )
@@ -57,6 +88,35 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 	}
 	else{
 		gui->setSpeedSetterButtonTeksture(ssButton);
+	}
+			//Lataa tykinkuulan spritesheet
+			if( !cannonballText.loadFromFile( "Images/Cannonball/cannonball.png", gRenderer ) )
+			{
+				printf( "Failed to load cannonball -sheet texture!\n" );
+				success = false;
+			}
+			else{
+				maailma->getPelihahmo()->setCannonballTexture(cannonballText);
+				maailma->setCannonballTexture(cannonballText);
+			}
+			//Lataa räjähdyksen spritesheet
+			if( !explosionText.loadFromFile( "Images/Background/Rajahdys.png", gRenderer ) )
+			{
+				printf( "Failed to load cannonball -sheet texture!\n" );
+				success = false;
+			}
+			else{
+				maailma->setExplosionTexture(explosionText);
+			}
+	}
+	//Load target texture
+	if( !targetText.loadFromFile( "Images/Characters/target.png", gRenderer ) )
+	{
+		printf( "Failed to load target texture!\n" );
+		success = false;
+	}
+	else{
+		maailma->setTargetTexture(targetText);
 	}
 
 	//Lataa Kaupungin tausta

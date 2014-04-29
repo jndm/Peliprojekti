@@ -16,10 +16,8 @@ public:
 	~Tekstuurit(void);
 	int getTextureWidth(){ return textureWidth; }
 	int getTextureHeight(){ return textureHeight; }
-
-
+	
 private:
-
 	//Tekstuureja varten tarvittavat muuttujat
 	int textureHeight, textureWidth;
 	SDL_Texture* mTexture;
