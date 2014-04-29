@@ -112,8 +112,8 @@ void Pelimoottori::handleEvent(){
         SDL_GetMouseState( &x, &y );
 		if(gui->checkIfHitSideBar(x, y)){
 			gui->moveSpeedBarButton(y);
-			maailma->getPelihahmo()->setXVelocity((480-y)/4, 1);
-			maailma->getPelihahmo()->setYVelocity((480-y)/4, 1);
+			maailma->getPelihahmo()->setXVelocity((480-y)/4);
+			maailma->getPelihahmo()->setYVelocity((480-y)/4);
 			sliderinLiikutus = true;
 		} else {
 			maailma->getPelihahmo()->setKohde(x,y);
@@ -126,8 +126,8 @@ void Pelimoottori::handleEvent(){
 		int x, y;
         SDL_GetMouseState( &x, &y );
 		gui->moveSpeedBarButton(y);
-		maailma->getPelihahmo()->setXVelocity((480-y)/2, 1);
-		maailma->getPelihahmo()->setYVelocity((480-y)/2, 1);
+		maailma->getPelihahmo()->setXVelocity((480-y)/2);
+		maailma->getPelihahmo()->setYVelocity((480-y)/2);
 	}else if( e.type == SDL_MOUSEBUTTONUP && kaantyminen){
 		kaantyminen = false;
 		maailma->getPelihahmo()->setKaantyminen(false);

@@ -29,8 +29,8 @@ public:
 	int getWidth();
 	int getHeight();
 	void setKaantyminen(bool kaantyminen);
-	void setXVelocity(float vx, int direction);
-	void setYVelocity(float vy, int direction);
+	void setXVelocity(float vx);
+	void setYVelocity(float vy);
 	int kaannossuunta();
 	void setKohde(int mx, int my);
 	void render( int camX, int camY );
@@ -40,6 +40,9 @@ public:
 	vector<Tykinkuula*> *getCannonballs(){ return &cannonballs; }
 	float getXvelocity(){ return dx; }
 	float getYvelocity(){ return dy; }
+	bool checkIfInArea(int rx, int ry, int rwidth, int rheight);
+	void setX(float _x);
+	void setY(float _y);
 };
 
 #endif

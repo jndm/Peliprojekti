@@ -22,7 +22,6 @@ struct RajaNelio{
 	int y;
 	int w;
 	int h;
-	int kulma;
 };
 
 struct Rajahdys{
@@ -69,7 +68,6 @@ private:
 	vector<Rajahdys> rajahdykset;
 	void luoKentanRajat();
 	Rajahdys rajahdys;
-	RajaNelio rajaneliot[15];
-	SDL_Rect rajat[15];
+	RajaNelio rajaneliot[7];
 };
 #endif
