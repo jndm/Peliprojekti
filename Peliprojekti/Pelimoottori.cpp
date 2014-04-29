@@ -95,7 +95,7 @@ void Pelimoottori::handleMainMenuEvent(){
 		quit = true;
 	}else if( e.type == SDL_MOUSEBUTTONDOWN){
 		int x, y;
-        SDL_GetMouseState( &x, &y );
+		SDL_GetMouseState( &x, &y );
 		if(mainmenu->checkIfHitStart(x, y)){
 			state = GAME;
 			loadGame();
@@ -112,7 +112,7 @@ void Pelimoottori::handleEvent(){
 	//Hiiren käsittely
 	else if( e.type == SDL_MOUSEBUTTONDOWN){
 		int x, y;
-        SDL_GetMouseState( &x, &y );
+		SDL_GetMouseState( &x, &y );
 		if(gui->checkIfHitSideBar(x, y)){
 			gui->moveSpeedBarButton(y);
 			maailma->getPelihahmo()->setXVelocity((480-y)/4);
@@ -127,7 +127,7 @@ void Pelimoottori::handleEvent(){
 		sliderinLiikutus = false;
 	}else if( e.type == SDL_MOUSEMOTION && sliderinLiikutus){
 		int x, y;
-        SDL_GetMouseState( &x, &y );
+		SDL_GetMouseState( &x, &y );
 		gui->moveSpeedBarButton(y);
 		maailma->getPelihahmo()->setXVelocity((480-y)/2);
 		maailma->getPelihahmo()->setYVelocity((480-y)/2);
@@ -136,50 +136,50 @@ void Pelimoottori::handleEvent(){
 		maailma->getPelihahmo()->setKaantyminen(false);
 	}else if( e.type == SDL_MOUSEMOTION && kaantyminen){
 		int x, y;
-        SDL_GetMouseState( &x, &y );
+		SDL_GetMouseState( &x, &y );
 		maailma->getPelihahmo()->setKohde(x,y);
 	}
 	if( e.type == SDL_KEYDOWN){
 		//Mitä painettiin?
 		switch( e.key.keysym.sym ){
-			case SDLK_UP:
-				//maailma->getPelihahmo()->setYVelocity(200,-1);
+		case SDLK_UP:
+			//maailma->getPelihahmo()->setYVelocity(200,-1);
 			break;
-			case SDLK_DOWN:
-				//maailma->getPelihahmo()->setYVelocity(200, 1);
+		case SDLK_DOWN:
+			//maailma->getPelihahmo()->setYVelocity(200, 1);
 			break;
-			case SDLK_LEFT:
-				maailma->getPelihahmo()->ammu(-1);
-				//maailma->getPelihahmo()->setXVelocity(200,-1);
+		case SDLK_LEFT:
+			maailma->getPelihahmo()->ammu(-1);
+			//maailma->getPelihahmo()->setXVelocity(200,-1);
 			break;
-			case SDLK_RIGHT:
-				maailma->getPelihahmo()->ammu(1);
-				//maailma->getPelihahmo()->setXVelocity(200, 1);			
+		case SDLK_RIGHT:
+			maailma->getPelihahmo()->ammu(1);
+			//maailma->getPelihahmo()->setXVelocity(200, 1);			
 			break;
-			case SDLK_k:
-				printf("kaupunkiin");
-				pelitila->setTila(pelitila->kaupungissa);
+		case SDLK_k:
+			printf("kaupunkiin");
+			pelitila->setTila(pelitila->kaupungissa);
 			break;
 		}
 
 	}/*
-	if( e.type == SDL_KEYUP && e.key.repeat == 0 )
-    {
-        switch( e.key.keysym.sym ){
-			case SDLK_UP:
-				maailma->getPelihahmo()->setYVelocity(0,-1);
-			break;
-			case SDLK_DOWN:
-				maailma->getPelihahmo()->setYVelocity(0, 1);
-			break;
-			case SDLK_LEFT:
-				maailma->getPelihahmo()->setXVelocity(0,-1);
-			break;
-			case SDLK_RIGHT:
-				maailma->getPelihahmo()->setXVelocity(0, 1);					
-			break;
-		}
-	}*/
+	 if( e.type == SDL_KEYUP && e.key.repeat == 0 )
+	 {
+	 switch( e.key.keysym.sym ){
+	 case SDLK_UP:
+	 maailma->getPelihahmo()->setYVelocity(0,-1);
+	 break;
+	 case SDLK_DOWN:
+	 maailma->getPelihahmo()->setYVelocity(0, 1);
+	 break;
+	 case SDLK_LEFT:
+	 maailma->getPelihahmo()->setXVelocity(0,-1);
+	 break;
+	 case SDLK_RIGHT:
+	 maailma->getPelihahmo()->setXVelocity(0, 1);					
+	 break;
+	 }
+	 }*/
 }
 
 int Pelimoottori::start()
@@ -208,44 +208,44 @@ int Pelimoottori::start()
 
 int Pelimoottori::loadGame(){
 	if( !mediaLoader->loadMedia(gRenderer, GAME) )
-		{
-			printf( "Failed to load media!\n" );
-		}
+	{
+		printf( "Failed to load media!\n" );
+	}
 	else
-		{	
-			maailma->createStartingEnemys();
-		}
+	{	
+		maailma->createStartingEnemys();
+	}
 	return 0;
 }
 
 void Pelimoottori::mainLoop(){
 	quit = false;
-		while( !quit ){
-			switch(state){
-				case MAINMENU:
-					while( SDL_PollEvent( &e ) != 0 )
-		{
-						handleMainMenuEvent();
-					}
-					mainmenu->render();
-					break;
-				case GAME:
-			//Tarkkaile näppäimiä
-			if(pelitila->getTila() == pelitila->maailmassa){
+	while( !quit ){
+		switch(state){
+		case MAINMENU:
 			while( SDL_PollEvent( &e ) != 0 )
 			{
-				handleEvent();
+				handleMainMenuEvent();
 			}
-			maailma->render();
-			maailma->move(FRAMETIMESTEP);
-					maailma->checkCollisions();
+			mainmenu->render();
+			break;
+		case GAME:
+			//Tarkkaile näppäimiä
+			if(pelitila->getTila() == pelitila->maailmassa){
+				while( SDL_PollEvent( &e ) != 0 )
+				{
+					handleEvent();
 				}
+				maailma->render();
+				maailma->move(FRAMETIMESTEP);
+				maailma->checkCollisions();
+			}
 			//Päivitä ruutu
-			
+
 			if(pelitila->getTila() == pelitila->kaupungissa){
 				kaupunki->lataaKuvat();
 			}
-			SDL_RenderPresent( gRenderer );
 		}
+		SDL_RenderPresent( gRenderer );
 	}
 }
