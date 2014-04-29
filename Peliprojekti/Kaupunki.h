@@ -17,9 +17,8 @@ public:
 	void handleEvent();
 	void setTaustaTexture(Tekstuurit tausta);
 	void setTaloTexture(Tekstuurit talo);
-	void setRautapajaTexture(Tekstuurit talo);
-	void setTavernaTexture(Tekstuurit talo);
-	void setTelakkaTexture(Tekstuurit talo);
+	void setLaituriTexture(Tekstuurit laituri);
+	
 
 private:
 	//tekstuurit
@@ -36,10 +35,14 @@ private:
 	SDL_Rect taloTela_rect;
 	SDL_Rect taloTave_rect;
 
+	Tekstuurit laituri;
+	SDL_Rect laituri_rect;
+	SDL_Rect laituriClip[2];
+
 	SDL_Event kylaEvent;
 
 
-	bool taloRauHoover, taloAseHoover, taloTelaHoover, taloTaveHoover;
+	bool taloRauHoover, taloAseHoover, taloTelaHoover, taloTaveHoover, laituriHoover;
 	bool quit;
 };
 #endif

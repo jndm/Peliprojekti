@@ -81,6 +81,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AsePaja.cpp" />
     <ClCompile Include="GUI.cpp" />
     <ClCompile Include="Kamera.cpp" />
     <ClCompile Include="Kaupunki.cpp" />
@@ -90,10 +91,12 @@
     <ClCompile Include="Pelihahmo.cpp" />
     <ClCompile Include="Pelimoottori.cpp" />
     <ClCompile Include="PeliTila.cpp" />
+    <ClCompile Include="Taverna.cpp" />
     <ClCompile Include="Tekstuurit.cpp" />
     <ClCompile Include="Vihollinen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AsePaja.h" />
     <ClInclude Include="GUI.h" />
     <ClInclude Include="Kamera.h" />
     <ClInclude Include="Kaupunki.h" />
@@ -103,6 +106,7 @@
     <ClInclude Include="Pelihahmo.h" />
     <ClInclude Include="Pelimoottori.h" />
     <ClInclude Include="PeliTila.h" />
+    <ClInclude Include="Taverna.h" />
     <ClInclude Include="Tekstuurit.h" />
     <ClInclude Include="Vihollinen.h" />
   </ItemGroup>

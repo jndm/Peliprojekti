@@ -75,6 +75,14 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer)
 	}else{
 		kaupunki->setTaloTexture(talo_kuva);
 	}
+	//lataa laituri kylään
+	if(!laituri_kuva.loadFromFile("Images/Objects/laituri.png", gRenderer) )
+	{
+		printf( "Failed to load asepaja texture!\n" );
+		success = false;
+	}else{
+		kaupunki->setLaituriTexture(laituri_kuva);
+	}
 
 	return success;
 }

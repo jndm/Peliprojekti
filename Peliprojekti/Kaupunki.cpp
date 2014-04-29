@@ -11,10 +11,10 @@ Kaupunki::Kaupunki(PeliTila* tila)
 	taloAseHoover = false;
 	taloTelaHoover = false;
 	taloTaveHoover = false;
+	laituriHoover = false;
 
 
-	//luodaan talot
-	//Asepaja	
+	//leikataan talot imagesta talot
 	int y=0;
 	for(int i=0; i<4; i++)
 	{
@@ -27,8 +27,19 @@ Kaupunki::Kaupunki(PeliTila* tila)
 			y++;
 		}
 	}
+
+	//leikataan objectit imagesta
+	for(int i=0; i<2; i++){
+		laituriClip[i].x = 0;
+		laituriClip[i].y = 0 + i*80;
+		laituriClip[i].w = 173;
+		laituriClip[i].h = 80;
+	}
 		
-		
+	laituri_rect.x = 145;
+	laituri_rect.y = 355;
+	laituri_rect.w = 173;
+	laituri_rect.h = 80;
 	
 	taloAse_rect.x = 76;
 	taloAse_rect.y = 23;
@@ -100,6 +111,12 @@ void Kaupunki::lataaKuvat()
 			talo.render(taloTave_rect.x,taloTave_rect.y,&taloClip[5]);
 		}else{
 			talo.render(taloTave_rect.x,taloTave_rect.y,&taloClip[4]);
+		}
+		if(laituriHoover)
+		{
+			laituri.render(laituri_rect.x,laituri_rect.y,&laituriClip[1]);
+		}else{
+			laituri.render(laituri_rect.x,laituri_rect.y,&laituriClip[0]);
 		}
 
 			
@@ -173,6 +190,12 @@ void Kaupunki::handleEvent()
 		{
 			avaaLaivatelakka();
 		}
+
+		if(x > laituri_rect.x && x < (laituri_rect.x + laituri_rect.w) && y > laituri_rect.y && y < (laituri_rect.y + laituri_rect.h))
+		{
+			printf("maailmaan");
+			pelitila->setTila(pelitila->maailmassa);
+		}
 		
 	}
 
@@ -209,14 +232,20 @@ void Kaupunki::handleEvent()
 			taloTelaHoover = false;
 		}
 
+		if(x > laituri_rect.x && x < (laituri_rect.x + laituri_rect.w) && y > laituri_rect.y && y < (laituri_rect.y + laituri_rect.h))
+		{
+			laituriHoover = true;
+		}else{
+			laituriHoover = false;
+		}
+
 	}
 
 	if(kylaEvent.type == SDL_KEYDOWN)
 	{
 		switch( kylaEvent.key.keysym.sym ){
 		case SDLK_m:
-			printf("maailmaan");
-			pelitila->setTila(pelitila->maailmassa);
+			
 			break;
 		}
 	}
@@ -230,5 +259,10 @@ void Kaupunki::setTaloTexture(Tekstuurit tekstuuri)
 void Kaupunki::setTaustaTexture(Tekstuurit tekstuuri)
 {
 	kyla = tekstuuri;
+}
+
+void Kaupunki::setLaituriTexture(Tekstuurit tekstuuri)
+{
+	laituri = tekstuuri;
 }
 

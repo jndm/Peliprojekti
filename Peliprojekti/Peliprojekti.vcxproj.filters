@@ -48,6 +48,12 @@
     <ClCompile Include="PeliTila.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AsePaja.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Taverna.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Pelimoottori.h">
@@ -81,6 +87,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PeliTila.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="AsePaja.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Taverna.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

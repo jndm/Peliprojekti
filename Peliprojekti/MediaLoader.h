@@ -27,6 +27,7 @@ private:
 	Tekstuurit enemyText;
 	Tekstuurit talo_kuva;
 	Tekstuurit kyla_kuva;
+	Tekstuurit laituri_kuva;
 	Maailma* maailma;
 	GUI* gui;
 	Kaupunki* kaupunki;
