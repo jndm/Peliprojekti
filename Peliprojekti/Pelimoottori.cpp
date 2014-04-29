@@ -14,7 +14,7 @@ Pelimoottori::Pelimoottori(void){
 	kaupunki = new Kaupunki(pelitila);
 	pelitila->setTila(pelitila->maailmassa);
 	maailma = new Maailma(this);
-	mediaLoader = new MediaLoader(maailma, gui, mainmenu);
+	mediaLoader = new MediaLoader(maailma, gui, mainmenu, kaupunki);
 }
 
 Pelimoottori::~Pelimoottori(void){
@@ -247,4 +247,5 @@ void Pelimoottori::mainLoop(){
 			}
 			SDL_RenderPresent( gRenderer );
 		}
+	}
 }

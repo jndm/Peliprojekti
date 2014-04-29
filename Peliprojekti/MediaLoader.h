@@ -17,7 +17,7 @@ class MediaLoader{
 public:
 	//lataa kuvia
 	bool loadMedia(SDL_Renderer* gRenderer, int state);
-	MediaLoader(Maailma* m, GUI* gui, MainMenu* mm);
+	MediaLoader(Maailma* m, GUI* gui, MainMenu* mm, Kaupunki* k);
 
 private:
 	//MainMenun tekstuurit

@@ -1,6 +1,6 @@
 #include "MediaLoader.h"
 
-MediaLoader::MediaLoader(Maailma* m, GUI* g, MainMenu* mm){
+MediaLoader::MediaLoader(Maailma* m, GUI* g, MainMenu* mm, Kaupunki* k){
 	maailma = m;
 	gui = g;
 	mainmenu = mm;
