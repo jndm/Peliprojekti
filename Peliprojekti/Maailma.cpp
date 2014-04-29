@@ -75,6 +75,19 @@ void Maailma::checkCollisions(){
 			}
 			else itt++;
 		}
+		
+		for(std::vector<Tykinkuula*>::iterator it2 = (*itv)->getCannonballs()->begin(); it2 != (*itv)->getCannonballs()->end(); ++i) {
+			if(pelihahmo->checkIfCannonballHit((*it2))){
+				rajahdys.x = (*it2)->getX();
+				rajahdys.y = (*it2)->getY();
+				rajahdys.valmis = false;
+				rajahdykset.push_back(rajahdys);
+				pelihahmo->lowerHp(1);
+				it2 = (*itv)->getCannonballs()->erase(it2);
+			}
+			else it2++;
+		}
+
 		if((*itv)->getHp() == 0){
 			itv = viholliset.erase(itv);
 		}

@@ -5,6 +5,7 @@ Pelihahmo::Pelihahmo(){
 	y=100;
 	dx = 0;
 	dy = 0;
+	hp = 15;
 	width = 50;
 	height = 50;
 	lastShootTime = 0;
@@ -206,6 +207,22 @@ void Pelihahmo::ammu(int tykki){
 		cannonballs.push_back(new Tykinkuula(this, &cannonballText, suunta, tykki, kaannossuunta()));
 		lastShootTime = SDL_GetTicks();
 	}
+}
+
+bool Pelihahmo::checkIfCannonballHit(Tykinkuula* tk){
+	bool hit = true;
+
+	if(x > tk->getX()+tk->getSade()/2){ hit = false; }
+	else if( x + width-tk->getSade()/2 < tk->getX()){ hit = false; }
+	else if( y > tk->getY()+tk->getSade()/2){ hit = false; }
+	else if( y + height - tk->getSade()/2 < tk->getY()){ hit = false; }
+
+	return hit;
+}
+
+void Pelihahmo::lowerHp(int dmg){
+	hp = hp - dmg;
+	//gSpriteClips[1].w = (int)(52*(hp/5.0));
 }
 
 int Pelihahmo::merkki(float f) {

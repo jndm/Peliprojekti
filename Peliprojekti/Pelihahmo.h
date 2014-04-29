@@ -16,6 +16,7 @@ private:
 	vector<Tykinkuula*> cannonballs;
 	int camX;
 	int camY;
+	int hp;
 	Uint32 lastShootTime, shootingDelay;
 	bool kaantyminen;
 	int merkki(float f);
@@ -37,6 +38,8 @@ public:
 	void setCharacterTexture(Tekstuurit tekstuuri);
 	void setCannonballTexture(Tekstuurit tekstuuri);
 	void ammu(int tykki);
+	bool checkIfCannonballHit(Tykinkuula* tk);
+	void lowerHp(int dmg);
 	vector<Tykinkuula*> *getCannonballs(){ return &cannonballs; }
 	float getXvelocity(){ return dx; }
 	float getYvelocity(){ return dy; }
