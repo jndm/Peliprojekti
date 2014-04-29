@@ -61,11 +61,11 @@ Tykinkuula::Tykinkuula(Vihollinen* vihu, Tekstuurit* text, int _direction, int _
 void Tykinkuula::move(float fts){
 	if(fromVihollinen) {
 		if(downOrUp == -1){
-			x-=(200*cos((90+direction)*M_PI/180)-vihollinen->getXvelocity()*cos((direction)*M_PI/180))*fts;
-			y-=(200*sin((90+direction)*M_PI/180)-vihollinen->getYvelocity()*sin((direction)*M_PI/180))*fts;
+			x-=fts*(200*cos((90+direction)*M_PI/180));//-vihollinen->getXvelocity()*cos((direction)*M_PI/180));
+			y-=fts*(200*sin((90+direction)*M_PI/180));//-vihollinen->getYvelocity()*sin((direction)*M_PI/180))*fts;
 		}else if(downOrUp == 1){
-			x+=(200*cos((90+direction)*M_PI/180)+vihollinen->getXvelocity()*cos(direction*M_PI/180))*fts;
-			y+=(200*sin((90+direction)*M_PI/180)+vihollinen->getYvelocity()*sin(direction*M_PI/180))*fts;
+			x+=fts*(200*cos((90+direction)*M_PI/180));//+vihollinen->getXvelocity()*cos(direction*M_PI/180))*fts;
+			y+=fts*(200*sin((90+direction)*M_PI/180));//+vihollinen->getYvelocity()*sin(direction*M_PI/180))*fts;
 		}
 	} else {
 		if(downOrUp == -1){

@@ -66,8 +66,6 @@ void Vihollinen::move(float fts) {
 		}
 	}
 
-	turnDirection = calculateTurnDirection();
-	fireCannonball(1);
 
 	suunta += turnDirection * M_PI/180.f;
 	if(suunta < -M_PI) {
@@ -121,6 +119,18 @@ void Vihollinen::calculateTarget(float pelaajaX, float pelaajaY) {
 		targetX = pisteetX[1];
 		targetY = pisteetY[1];
 	}
+	
+	turnDirection = calculateTurnDirection();
+
+	printf("angle: %f\n",angle*180/M_PI);
+	if(45 < abs(angle*180/M_PI) && 135 > abs(angle*180/M_PI)) {
+		if(turnDirection != 0) {
+			fireCannonball(turnDirection);
+		} else {
+			fireCannonball(merkki(angle));
+		}
+	}
+
 	//targetX = pelaajaX + cos(angle-45) * AMPUMISETAISYYS;
 	//targetY = pelaajaY + sin(angle-45) * AMPUMISETAISYYS;
 	//dx = 150*cos(atan2(targetY - centerY, targetX - centerX));
@@ -144,7 +154,7 @@ int Vihollinen::calculateTurnDirection() {
 
 void Vihollinen::fireCannonball(int cannon) {
 	if(SDL_GetTicks() > lastShootTime + shootingDelay){
-		cannonballs.push_back(new Tykinkuula(this, cannonballText, suunta, cannon, calculateTurnDirection()));
+		cannonballs.push_back(new Tykinkuula(this, cannonballText, suunta*180/M_PI, cannon, calculateTurnDirection()));
 		lastShootTime = SDL_GetTicks();
 	}
 }
@@ -166,12 +176,11 @@ int Vihollinen::getHeight() {
 }
 
 void Vihollinen::render(int cx, int cy) {
-	maailma->getEnemyTexture()->render( x - cx, y - cy );	//Näytä neliö kameran suhteen
-	maailma->getTargetTexture()->render( targetX - cx, targetY - cy);
+	maailma->getEnemyTexture()->render(x - cx, y - cy, NULL, suunta*180/M_PI);	//Näytä neliö kameran suhteen
+	maailma->getTargetTexture()->render(targetX - cx, targetY - cy);
 
 	healthBarText->render(x - cx -1, y - cy-20, &gSpriteClips[0]);	//52 pitkä kuva -> keskitetään miinustamalla 1 x suunnasta
 	healthBarText->render(x - cx -1, y - cy-20, &gSpriteClips[1]);
-	vihollinenText->render( x - cx, y - cy );
 }
 
 void Vihollinen::setVelocity(float v) {

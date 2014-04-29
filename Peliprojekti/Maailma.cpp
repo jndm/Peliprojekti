@@ -19,11 +19,11 @@ void Maailma::render(){
 	pelihahmo->render( camera.getCameraX(), camera.getCameraY() );
 	for(std::vector<Vihollinen*>::iterator it = viholliset.begin(); it != viholliset.end(); ++it) {
 		(*it)->render(camera.getCameraX(), camera.getCameraY());
+		for(std::vector<Tykinkuula*>::iterator it2 = (*it)->getCannonballs()->begin(); it2 != (*it)->getCannonballs()->end(); ++it2) {
+			(*it2)->render(camera.getCameraX(), camera.getCameraY());
+		}
 	}
 	for(std::vector<Tykinkuula*>::iterator it = pelihahmo->getCannonballs()->begin(); it != pelihahmo->getCannonballs()->end(); ++it) {
-		(*it)->render(camera.getCameraX(), camera.getCameraY());
-	}
-	for(std::vector<Tykinkuula*>::iterator it = vihollinen->getCannonballs()->begin(); it != vihollinen->getCannonballs()->end(); ++it) {
 		(*it)->render(camera.getCameraX(), camera.getCameraY());
 	}
 	int i=0;
@@ -50,6 +50,13 @@ void Maailma::move(float timestep){
 	}
 	for(std::vector<Vihollinen*>::iterator it = viholliset.begin(); it != viholliset.end(); ++it) {
 		(*it)->move(timestep);
+		for(std::vector<Tykinkuula*>::iterator it2 = (*it)->getCannonballs()->begin(); it2 != (*it)->getCannonballs()->end(); ++i) {
+			(*it2)->move(timestep);
+			if((*it2)->ifRdyToBeDestroyed()){
+				it2 = (*it)->getCannonballs()->erase(it2);
+			}
+			else it2++;
+		}
 	}
 }
 
@@ -104,7 +111,7 @@ void Maailma::createStartingEnemys(){
 		viholliset[viholliset.size() - 1]->setHealthBarText(&enemyHpBarText);
 		viholliset[viholliset.size() - 1]->setVihollinenText(&enemyTexture);
 		viholliset[viholliset.size() - 1]->setTargetText(&targetTexture);
-		viholliset[viholliset.size() - 1]->setCannonballText(&targetTexture);
+		viholliset[viholliset.size() - 1]->setCannonballText(&cannonballTexture);
 	}
 }
 
@@ -133,6 +140,10 @@ void Maailma::setExplosionTexture(Tekstuurit enemyText){
 		gSpriteClips[i].h = 30;
 	}
 	explosionFrame = 0;
+}
+
+void Maailma::setCannonballTexture(Tekstuurit cannonballText) {
+	cannonballTexture = cannonballText;
 }
 
 bool Maailma::renderExplosion(Rajahdys r){

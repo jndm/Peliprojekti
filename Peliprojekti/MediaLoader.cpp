@@ -96,6 +96,7 @@ bool MediaLoader::loadMedia(SDL_Renderer* gRenderer, int state)
 			}
 			else{
 				maailma->getPelihahmo()->setCannonballTexture(cannonballText);
+				maailma->setCannonballTexture(cannonballText);
 			}
 			//Lataa räjähdyksen spritesheet
 			if( !explosionText.loadFromFile( "Images/Background/Rajahdys.png", gRenderer ) )
