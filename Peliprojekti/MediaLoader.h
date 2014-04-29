@@ -36,6 +36,7 @@ private:
 	Tekstuurit explosionText;
 	Tekstuurit enemyHealthBarText;
 	Tekstuurit targetText;
+	Tekstuurit rajatext;
 	Tekstuurit talo_kuva;
 	Tekstuurit kyla_kuva;
 	Tekstuurit laituri_kuva;

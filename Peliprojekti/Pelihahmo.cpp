@@ -189,16 +189,12 @@ void Pelihahmo::setCannonballTexture(Tekstuurit tekstuuri){
 	cannonballText = tekstuuri;
 }
 
-void Pelihahmo::setXVelocity(float vx, int direction){
-
+void Pelihahmo::setXVelocity(float vx){
 	dx = vx;
-
 }
 
-void Pelihahmo::setYVelocity(float vy, int direction){
-
+void Pelihahmo::setYVelocity(float vy){
 	dy = vy;
-
 }
 void Pelihahmo::ammu(int tykki){
 
@@ -211,4 +207,23 @@ void Pelihahmo::ammu(int tykki){
 int Pelihahmo::merkki(float f) {
 	if (f > 0) return 1;
 	return (f == 0) ? 0 : -1;
+}
+
+bool Pelihahmo::checkIfInArea(int rx, int ry, int rwidth, int rheight){
+	int hit = true;
+
+	if(x > rx+rwidth){ hit = false; }
+	else if( x + width < rx){ hit = false; }
+	else if( y > ry+rheight){ hit = false; }
+	else if( y + height < ry){ hit = false; }
+
+	return hit;
+}
+
+void Pelihahmo::setX(float _x){
+	x = _x;
+}
+
+void Pelihahmo::setY(float _y){
+	y = _y;
 }

@@ -5,7 +5,7 @@ Maailma::Maailma(Pelimoottori* pelimoottori){
 	SCREEN_HEIGHT = pelimoottori->getSCREENHEIGHT();
 	LEVEL_WIDTH = pelimoottori->getLEVELWIDTH();
 	LEVEL_HEIGHT = pelimoottori->getLEVELHEIGHT();
-
+	luoKentanRajat();
 	pelihahmo = new Pelihahmo();
 	camera.alusta(SCREEN_WIDTH, SCREEN_HEIGHT, pelihahmo);
 	gui = pelimoottori->getGUI();
@@ -33,6 +33,7 @@ void Maailma::render(){
 		}
 		else it++;
 	}
+	i=0;
 	gui->render(camera.getCameraX(), camera.getCameraY());
 }
 
@@ -79,6 +80,14 @@ void Maailma::checkCollisions(){
 			itv = viholliset.erase(itv);
 		}
 		else itv++;
+	}
+	for(int i=0; i<7; i++){
+		if(pelihahmo->checkIfInArea(rajaneliot[i].x, rajaneliot[i].y, rajaneliot[i].w, rajaneliot[i].h)){
+			//pelihahmo->setXVelocity(0);
+			//pelihahmo->setYVelocity(0);
+			pelihahmo->setX(pelihahmo->getX());
+			pelihahmo->setY(pelihahmo->getY());
+		}
 	}
 }
 
@@ -131,6 +140,10 @@ void Maailma::setTaustaTexture(Tekstuurit taustaText) {
 	tausta = taustaText;
 }
 
+void Maailma::setRajaTexture(Tekstuurit t) {
+	rajatext = t;
+}
+
 void Maailma::setExplosionTexture(Tekstuurit enemyText){
 	explosionTexture = enemyText;
 	for(int i=0; i<FRAMES_IN_SPRITESHEET; ++i){
@@ -154,4 +167,21 @@ bool Maailma::renderExplosion(Rajahdys r){
 		return true;
 	}else
 		return false;
+}
+
+void Maailma::luoKentanRajat(){
+	RajaNelio rj0 = {40,0,1968,40};
+	RajaNelio rj1 = {0,0,40,2048};
+	RajaNelio rj2 = {2008,0,40,2048};
+	RajaNelio rj3 = {40,2008,1968,40};
+	RajaNelio rj4 = {40,758,60,40};
+	RajaNelio rj5 = {40,644,60,40};
+	RajaNelio rj6 = {100,644,40,144};
+	rajaneliot[0] = rj0;
+	rajaneliot[1] = rj1;
+	rajaneliot[2] = rj2;
+	rajaneliot[3] = rj3;
+	rajaneliot[4] = rj4;
+	rajaneliot[5] = rj5;
+	rajaneliot[6] = rj6;
 }
